@@ -1,0 +1,4 @@
+edahira_dahira:
+    resource: "@EdahiraDahiraBundle/Resources/config/routing.yml"
+    prefix:   /
+

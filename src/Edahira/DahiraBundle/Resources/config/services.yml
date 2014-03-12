@@ -1,0 +1,7 @@
+parameters:
+#    edahira_dahira.example.class: Edahira\DahiraBundle\Example
+
+services:
+#    edahira_dahira.example:
+#        class: %edahira_dahira.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
