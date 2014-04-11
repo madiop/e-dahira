@@ -1,0 +1,18 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #edahira_dahirabundle_caisses_jour select{
+            width:74px
+        }
+    </style>
+{% endblock %}
+
+{% block title %}EdahiraDahiraBundle:Caisse:editer{% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'type.form.titre' | trans}}</h1>
+{% endblock %}
+{% block body_content%}
+	{% include "EdahiraDahiraBundle:Caisses:formCaisse.html.twig" %}
+{% endblock %}

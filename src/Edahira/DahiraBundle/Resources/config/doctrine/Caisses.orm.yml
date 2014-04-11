@@ -1,0 +1,29 @@
+Edahira\DahiraBundle\Entity\Caisses:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\CaissesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nom:
+            type: string
+            length: '100'
+        cotisation:
+            type: integer
+        jour:
+            type: date
+        etat:
+            type: boolean
+    manyToOne:
+        typeCaisse:
+            targetEntity: Typecaisses
+            inversedBy: caisses
+    omeToMany:
+        typeevenement:
+            targetEntity: Typeevenement
+            mappedBy: caisse
+    lifecycleCallbacks: {  }

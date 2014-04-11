@@ -1,0 +1,12 @@
+<form class="form-horizontal" action="{{ path('typecaisse_editer',{'id': id}) }}" method="post" {{ form_enctype(form) }}>
+	{{ form_errors(form) }}
+	<fieldset>
+		
+		 {{ form_widget(form) }}
+
+        <div class="form-actions">
+			<input type="submit" class="btn btn-success btn-large" value={{ 'label.enregistrer'| trans}} />
+			<a class="btn" href="{{ path('event_index') }}">{{ 'label.annuler'| trans}}</a>
+		</div>
+	</fieldset>
+</form>

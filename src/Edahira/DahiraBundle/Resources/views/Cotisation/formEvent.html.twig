@@ -1,0 +1,27 @@
+<div class="row-fluid">
+	<form class="form-horizontal" action="{{ path('event_editer') }}" method="post" {{ form_enctype(formEvent) }}>
+		{{ form_errors(formEvent) }}
+
+			<div class="control-group">
+				<label class="control-label" for="membre">{{ form_label(formEvent.membre) }}</label>
+				<div class="controls">
+					{{ form_errors(formEvent.membre) }}
+					{{ form_widget(formEvent.membre) }}
+				</div>
+			</div>
+		    <div class="control-group">
+				<label class="control-label" for="date">{{ form_label(formEvent.date) }}</label>
+				<div class="controls">
+					{{ form_errors(formEvent.date) }}
+					{{ form_widget(formEvent.date) }}
+				</div>
+			</div>
+			<div class="control-group">
+				{{ form_rest(form) }}
+			</div>
+			<div class="form-actions">
+				<input type="submit" class="btn btn-success btn-large" value={{ 'label.enregistrer'| trans}} />
+				<a class="btn" href="{{ path('caisse_index') }}">{{ 'label.annuler'| trans}}</a>
+			</div>
+	</form>
+</div>

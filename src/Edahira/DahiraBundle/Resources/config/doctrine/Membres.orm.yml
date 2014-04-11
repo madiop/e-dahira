@@ -1,0 +1,43 @@
+Edahira\DahiraBundle\Entity\Membres:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\MembresRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        prenom:
+            type: string
+            length: '100'
+        nom:
+            type: string
+            length: '100'
+        adresse:
+            type: string
+            length: 255
+            nullable: true
+        email:
+            type: string
+            length: '50'
+            nullable: true
+        telephone1:
+            type: string
+            length: '20'
+        telephone2:
+            type: string
+            length: '20'
+            nullable: true
+        etat:
+            type: boolean
+    oneToMany:
+        cotisations:
+            targetEntity: Cotisations
+            mappedBy: membre
+        dahiras:
+            targetEntity: Evenement
+            mappedBy: membre
+            nullable: true
+    lifecycleCallbacks: {  }

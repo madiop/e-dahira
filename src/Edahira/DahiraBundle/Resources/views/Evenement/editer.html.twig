@@ -1,0 +1,26 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+{% block stylesheets %}
+{{ parent() }}
+<style>
+#edahira_dahirabundle_evenement_date select{
+    width:73px
+}
+
+</style>
+{% endblock %}
+
+{% block title %}{{ 'titre.page.evenement.editer' | trans}}{% endblock %}
+{% block body_header %}
+	<h1>{{ 'titre.page.evenement.editer' | trans}}</h1>
+{% endblock %}
+{% block body_content %}
+    {% include "EdahiraDahiraBundle:Evenement:formEvenement.html.twig" %}
+
+    {#
+    <div class="row-fluid">
+    	<hr class="niveau">
+    	bonjour
+	</div>
+    #}
+	
+{% endblock %}

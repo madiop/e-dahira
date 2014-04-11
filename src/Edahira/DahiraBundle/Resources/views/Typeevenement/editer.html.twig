@@ -1,0 +1,10 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% block title %}EdahiraDahiraBundle:Typecaisse:editer{% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'titre.typevent.form' | trans}}</h1>
+{% endblock %}
+{% block body_content%}
+	{% include "EdahiraDahiraBundle:Typeevenement:formTypeevenement.html.twig" %}
+{% endblock %}

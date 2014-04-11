@@ -1,0 +1,24 @@
+Edahira\DahiraBundle\Entity\Evenement:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\EvenementRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: date
+    oneToMany:
+        cotisations:
+            targetEntity: Cotisations
+            mappedBy: evenement
+    manyToOne:
+        typeevenement:
+            targetEntity: Typeevenement
+        membre:
+            targetEntity: Membres
+            inversedBy: dahiras
+    lifecycleCallbacks: {  }

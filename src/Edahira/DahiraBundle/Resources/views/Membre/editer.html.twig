@@ -1,0 +1,10 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% block title %}EdahiraDahiraBundle:Membre:editer{% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'membre.form.titre' | trans}}</h1>
+{% endblock %}
+{% block body_content%}
+	{% include "EdahiraDahiraBundle:Membre:formMembre.html.twig" %}
+{% endblock %}

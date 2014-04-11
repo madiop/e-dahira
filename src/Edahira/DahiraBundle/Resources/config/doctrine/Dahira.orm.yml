@@ -1,0 +1,17 @@
+Edahira\DahiraBundle\Entity\Dahira:
+    type: entity
+    table: null
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: date
+    manyToOne:
+        membre:
+            targetEntity: Membres
+            inversedBy: dahiras
+    lifecycleCallbacks: {  }

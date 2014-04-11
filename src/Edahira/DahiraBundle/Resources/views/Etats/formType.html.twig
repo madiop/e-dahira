@@ -1,0 +1,12 @@
+<form class="form-horizontal" action="{{ path('etats_index') }}" method="post" {{ form_enctype(form) }}>
+	{{ form_errors(form) }}
+	<fieldset>
+		 
+		 {{ form_widget(form) }}
+
+        <div class="form-actions">
+			<input type="submit" class="btn btn-success btn-large" value={{ 'label.voir'| trans | capitalize }} />
+			{# <a class="btn" href="{{ path('event_index') }}">{{ 'label.annuler'| trans}}</a> #}
+		</div>
+	</fieldset>
+</form>

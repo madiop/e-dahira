@@ -1,0 +1,19 @@
+membre: Membre
+membre.nouveau: Nouveau
+membre.liste: 'Liste des membres du dahira'
+stats: Statistiques
+'Symfony2 is great': 'J''aime Symfony2'
+membre.form.titre: 'Formulaire nouveau membre'
+membre.prenom: Prénom
+membre.nom: Nom
+membre.adresse: Adresse
+membre.email: E-mail
+membre.tel1: 'Téléphone 1'
+membre.tel2: 'Téléphone 2'
+membre.etat: Etat
+bouton.enregistrer: Enregistrer
+bouton.annuler: Annuler
+membre.ajouter: 'Nouveau membre'
+action.edit: Modifer
+action.delete: Supprimer
+action.details: Détails

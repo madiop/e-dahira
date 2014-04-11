@@ -1,0 +1,13 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% block title %}{{'titre.etat.tyepeevent' | trans}}{% endblock %}
+
+{% block body_header %}
+	<h2>{{ 'titre.etat.tyepeevent' | trans}}</h2>
+{% endblock %}
+{% block body_content %}
+	{% for message in app.session.flashbag.get('info') %}
+	<p>{{ message }}</p>
+	{% endfor %}
+	
+{% endblock %}

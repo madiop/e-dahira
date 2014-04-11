@@ -1,0 +1,25 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        [id*="form"] div {
+          /*border:#000000 1px solid;*/
+          display:inline-block;
+        }
+        .form-horizontal .controls{
+          margin-left: 15px;
+          margin-top: 3px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block title %} {{ 'titre.page.cotisation.editer' | trans}}{% endblock %}
+{% block body_header %}
+	<h1>Dahira <small>{{membre.affichage}} le {{ event.date | date('d-m-Y')}}</small></h1>
+{% endblock %}
+
+{% block body_content %}
+     {% include "EdahiraDahiraBundle:Cotisation:formCotisation.html.twig" %}
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% block title %}{{'titre.cotisation.etat' | trans}}{% endblock %}
+
+{% block body_header %}
+	<h2>Dahira <small>{{event.membre.affichage}} le {{ event.date | date('d-m-Y')}}</small></h2>
+{% endblock %}
+{% block body_content %}
+	{% for message in app.session.flashbag.get('info') %}
+	<p>{{ message }}</p>
+	{% endfor %}
+	
+	{% if event.cotisations | length > 0 %}
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>{{ 'label.nom'| trans | upper }}</th>
+					<th>{{ 'label.cotisation'| trans | upper }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for cotisation in event.cotisations %}
+				<tr class="list-users">
+					<td>{{ cotisation.membre.affichage }}</td>
+					{% if cotisation.etat == true %}
+						<td><span class="label label-success">{{'label.done' | trans}}</span></td>
+					{% else %}
+						<td><span class="label label-important">{{'label.undone' | trans}}</span></td>
+					{% endif %}
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		{#
+		<div class="pagination">
+			<ul>
+				{% for p in range(1, nombrePage) %}
+				<li{% if p == page %} class="active"{% endif %}>
+					<a href="{{ path('membre_index', {'page': p}) }}">{{ p}}</a>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+		#}
+		{% else %}
+			<p>{{ 'text.membre.aucun' | trans }}</p>
+		{% endif %}
+     	<a href="{{ path('cotisation_editer', {'id': event.id}) }}" class="btn btn-success">{{ 'label.edit' | trans }}</a>
+
+{% endblock %}

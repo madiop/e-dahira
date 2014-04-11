@@ -1,4 +1,5 @@
 edahira_dahira:
     resource: "@EdahiraDahiraBundle/Resources/config/routing.yml"
-    prefix:   /
-
+    prefix:   /{_locale}/dahira
+    requirements:
+        _locale: en|fr

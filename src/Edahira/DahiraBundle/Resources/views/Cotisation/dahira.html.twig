@@ -1,0 +1,25 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #edahira_dahirabundle_evenement_date select{
+            width:73px
+        }
+        .niveau {
+        	margin-top: 0px;
+        }
+        [class*="span"] {
+          /*border:#ff0000 1px solid;*/
+        }
+    </style>
+{% endblock %}
+
+{% block title %}EdahiraDahiraBundle:Cotisation:dahira{% endblock %}
+{% block body_header %}
+	<h1>{{ 'titre.page.cotisation.dahira' | trans}}</h1>
+{% endblock %}
+{% block body_content %}
+
+   Cotisation 
+	
+{% endblock %}

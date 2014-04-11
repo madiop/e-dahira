@@ -1,0 +1,55 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+{% block title %}{{ 'event.list' | trans }}{% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'event.list' | trans }}</h1>
+{% endblock %}
+{% block body_content %}
+	{% for message in app.session.flashbag.get('info') %}
+	<p>{{ message }}</p>
+	{% endfor %}
+	
+	{% if evenements | length > 0 %}
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>{{ 'label.prenom'| trans }}</th>
+					<th>{{ 'label.nom'| trans }}</th>
+					<th>{{ 'label.date'| trans }}</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for evenement in evenements %}
+				<tr class="list-users">
+					<td>{{ evenement.membre.prenom }}</td>
+					<td>{{ evenement.membre.nom }}</td>
+					<td>{{ evenement.date | date('d/m/Y') }}</td>
+					<td>
+						<div class="btn-group">
+							<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="{{ path('event_editer', {'id': evenement.id}) }}"><i class="icon-pencil"></i> {{ 'action.edit' |trans }}</a></li>
+								<li><a href="{{ path('event_supprimer', {'id': evenement.id}) }}"><i class="icon-trash"></i> {{ 'action.delete' |trans }}</a></li>
+								<li><a href="{{ path('cotisation_etat', {'id': evenement.id}) }}"><i class="icon-user"></i> {{ 'action.detailscotis' |trans }}</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		<div class="pagination">
+			<ul>
+				{% for p in range(1, nombrePage) %}
+				<li{% if p == page %} class="active"{% endif %}>
+					<a href="{{ path('event_index', {'page': p}) }}">{{ p}}</a>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	{% else %}
+		<p>{{ 'text.norecords' | trans }}</p>
+	{% endif %}
+	<a href="{{ path('event_editer', {'id': null}) }}" class="btn btn-success">{{ 'label.ajouter' | trans }}</a>
+{% endblock %}

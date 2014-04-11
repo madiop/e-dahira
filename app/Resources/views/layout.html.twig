@@ -17,49 +17,47 @@
     	{% block navbar %}
       
         <div class="navbar navbar-fixed-top">
-		      <div class="navbar-inner">
+		    <div class="navbar-inner">
 		        <div class="container-fluid">
-		          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		            <span class="icon-bar"></span>
-		          </a>
-		          <a class="brand" href="#">Strass Administration</a>
-		          <div class="btn-group pull-right">
-					<a class="btn" href="my-profile.html"><i class="icon-user"></i> Admin</a>
-		            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
-		              <span class="caret"></span>
-		            </a>
-		            <ul class="dropdown-menu">
-					  <li><a href="my-profile.html">Profile</a></li>
-		              <li class="divider"></li>
-		              <li><a href="#">Logout</a></li>
-		            </ul>
-		          </div>
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<a class="brand" href="{{ path('dahira_homepage')}}">Mafaatihul Bichri</a>
+					<div class="btn-group pull-right">
+					
+						<a class="btn" href=""><i class="icon-user"></i> Admin</a>
+						<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+						  <span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+						  <li><a href="">Profile</a></li>
+						  <li class="divider"></li>
+						  <li><a href="">Logout</a></li>
+						</ul>
+					</div>{#
+					<ul class="nav" style="float:right">
+						<li><a href="{{ path(app.request.attributes.get('_route'), {_locale: 'fr'}) }}"><img src="{{ asset('img/fr.png') }}" alt="picto-fr"/></a></li>
+						<li><a href="{{ path(app.request.attributes.get('_route'), {_locale: 'en'}) }}"><img src="{{ asset('img/en.png') }}" alt="picto-en"/></a></li>
+					</ul>#}
+					
 		          <div class="nav-collapse">
 		            <ul class="nav">
-					<li><a href="index.html">Home</a></li>
-		              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <b class="caret"></b></a>
+		              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{'membre' | trans }}<b class="caret"></b></a>
 						<ul class="dropdown-menu">
-							<li><a href="new-user.html">New User</a></li>
+							<li><a href="{{ path('membre_editer') }}">{{'membre.nouveau' | trans}}</a></li>
 							<li class="divider"></li>
-							<li><a href="users.html">Manage Users</a></li>
+							<li><a href="{{ path('membre_index') }}">{{'membre.liste' | trans}}</a></li>
 						</ul>
 					  </li>
-		              <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown">Roles <b class="caret"></b></a>
-						<ul class="dropdown-menu">
-							<li><a href="new-role.html">New Role</a></li>
-							<li class="divider"></li>
-							<li><a href="roles.html">Manage Roles</a></li>
-						</ul>
-					  </li>
-					  <li><a href="stats.html">Stats</a></li>
+					  <li><a href="">{{'stats' | trans}}</a></li>
 		            </ul>
 		          </div>
 		        </div>
 		      </div>
 		    </div>
-		    {% endblock %}
+		{% endblock %}
 		    <div class="container-fluid">
 		      <div class="row-fluid">
 		      {% block content %}
@@ -67,10 +65,9 @@
 		      </div>
 		
 		      <hr>
-		
 		      <footer class="well">
 		       {% block footer %}
-		        &copy; Madiop THIAM madiop44@gmail.com
+					&copy; Madiop THIAM madiop44@gmail.com
 		        {% endblock %}
 		      </footer>
 		
