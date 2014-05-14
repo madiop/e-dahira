@@ -17,7 +17,7 @@ Edahira\DahiraBundle\Entity\Membres:
             length: '100'
         adresse:
             type: string
-            length: 255
+            length: '255'
             nullable: true
         email:
             type: string
@@ -26,18 +26,35 @@ Edahira\DahiraBundle\Entity\Membres:
         telephone1:
             type: string
             length: '20'
+            nullable: true
         telephone2:
             type: string
             length: '20'
             nullable: true
         etat:
             type: boolean
+            nullable: true
+    manyToOne:
+        categorie:
+            targetEntity: Categories
+            inversedBy: membres
+            joinColumn:
+                nullable: false
+        dahira:
+            targetEntity: Dahira
+            inversedBy: membres
+            joinColumn:
+                nullable: false
     oneToMany:
+        versements:
+            targetEntity: Versements
+            mappedBy: membre
+            cascade: [persist, remove]
         cotisations:
             targetEntity: Cotisations
             mappedBy: membre
+            cascade: [persist, remove]
         dahiras:
             targetEntity: Evenement
             mappedBy: membre
-            nullable: true
     lifecycleCallbacks: {  }

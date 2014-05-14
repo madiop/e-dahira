@@ -12,18 +12,29 @@ Edahira\DahiraBundle\Entity\Caisses:
         nom:
             type: string
             length: '100'
-        cotisation:
+        description:
+            type: string
+            length: '255'
+            nullable: true
+        fond:
             type: integer
-        jour:
-            type: date
+            nullable: true
         etat:
             type: boolean
-    manyToOne:
-        typeCaisse:
-            targetEntity: Typecaisses
-            inversedBy: caisses
-    omeToMany:
+    oneToMany:
         typeevenement:
             targetEntity: Typeevenement
             mappedBy: caisse
+        charges:
+            targetEntity: Charges
+            mappedBy: caisse
+        depenses:
+            targetEntity: Depenses
+            mappedBy: caisse
+    manyToOne:
+        dahira:
+            targetEntity: Dahira
+            inversedBy: caisses
+            joinColumn:
+                nullable: false
     lifecycleCallbacks: {  }

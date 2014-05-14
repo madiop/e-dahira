@@ -1,7 +1,21 @@
-{% extends "::base.html.twig" %}
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
 
-{% block title %}EdahiraDahiraBundle:Typeevenement:supprimer{% endblock %}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
 
-{% block body %}
-<h1>Welcome to the Typeevenement:supprimer page</h1>
+{% block title %}{{ parent() }} | {{'label.type' | lower | trans }}{% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'text.suppression' | trans({'%objet%': 'type d\'évènement: '~type.nom}) }}</h1>
+{% endblock %}
+
+{% block body_content %}
+	{{ parent() }}
+	<form class="form-horizontal" action="{{ path('typeevenement_supprimer',{'id': type.id}) }}" method="post" >
+		<fieldset>
+	        <div class="form-actions">
+				<input type="submit" class="btn btn-success btn-large" value={{ 'label.supprimer'| trans}} />
+				<a class="btn" href="{{ path('typeevenement_index') }}">{{ 'label.annuler'| trans}}</a>
+			</div>
+		</fieldset>
+	</form>
 {% endblock %}

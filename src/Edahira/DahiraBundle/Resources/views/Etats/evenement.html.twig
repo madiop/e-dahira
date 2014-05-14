@@ -1,66 +1,43 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
 
-{% block title %}{{'titre.cotisation.etat' | trans}}{% endblock %}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
 
-{% block body_header %}
-	<h2>{{ 'titre.etatdahira'| trans }}</h2>
+{% block title %}{{ parent()}} | {{'label.etat' | lower | trans }}{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<style>
+	.page-header {
+	   padding-bottom: 0px;
+	}
+</style>
 {% endblock %}
-{% block body_content %}
-	{% for message in app.session.flashbag.get('info') %}
-	<p>{{ message }}</p>
-	{% endfor %}
-	
-	{% if cotisations | length > 0 %}
-		<table class="table table-striped table-bordered table-condensed">
-			<thead align="center">
-				<tr>
-					<th>{{ 'label.membre' | trans }}</th>
-				{% for event in events %}
-					<th>{{ event.membre.affichage }}<br/>
-					    ({{ event.date| date('d-m-Y') }})</th>
-			    {% endfor %}
+{% block body_header %}
+	{% include "EdahiraDahiraBundle:Etats:formType.html.twig" %}
+{% endblock %}
 
-				</tr>
-			</thead>
-			<tbody>
-			{% for membres in cotisations %}
-				<tr class="list-users">
-					<td>{{ membres[0].membre.affichage }}</td>
-				    {% for cotisation in membres %}
-					    {% if(cotisation.etat == true) %}
-					    <td><span class="label label-success">{{'label.done' | trans}}</span></td>
-					    {% else %}
-					    <td><span class="label label-important">{{'label.undone' | trans}}</span></td>
-					    {% endif %}
-					{% endfor %}
-				</tr>
-			{% endfor %}
-			{#
-            {% for membre in membres %}
-				<tr class="list-users">
-					<td>{{ cotisation.membre.affichage }}</td>
-					{% if cotisation.etat == true %}
-						<td><span class="label label-success">{{'label.done' | trans}}</span></td>
-					{% else %}
-						<td><span class="label label-important">{{'label.undone' | trans}}</span></td>
-					{% endif %}
-				</tr>
-			{% endfor %}s
-			#} 
-			</tbody>
-		</table>
-		{#
-		<div class="pagination">
-			<ul>
-				{% for p in range(1, nombrePage) %}
-				<li{% if p == page %} class="active"{% endif %}>
-					<a href="{{ path('membre_index', {'page': p}) }}">{{ p}}</a>
-				</li>
-				{% endfor %}
-			</ul>
-		</div>
-		#}
-		{% else %}
-			<p>{{ 'text.cotis.aucun' | trans }}</p>
-		{% endif %}
+{% block body_content %}
+	{{ parent() }}
+	
+	<div id="etats_type"></div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+    <script >
+		$("#form_type").submit(function(e){
+		    e.preventDefault();
+		    var DATA = $(this).serialize();
+		    $.ajax({
+		        type: "POST",
+		        url: "{{ path('etats_evenement')}}",
+		        data: DATA,
+		        cache: false,
+		        success: function(data){
+		           $('#etats_type').html(data);
+		        }
+		    });    
+		    return false;
+		});
+	</script>
 {% endblock %}

@@ -15,10 +15,19 @@ Edahira\DahiraBundle\Entity\Evenement:
         cotisations:
             targetEntity: Cotisations
             mappedBy: evenement
+        dons:
+            targetEntity: Dons
+            mappedBy: evenement
     manyToOne:
         typeevenement:
             targetEntity: Typeevenement
+            inversedBy: evenement
         membre:
             targetEntity: Membres
             inversedBy: dahiras
+        dahira:
+            targetEntity: Dahira
+            inversedBy: evenement
+            joinColumn:
+                nullable: false
     lifecycleCallbacks: {  }

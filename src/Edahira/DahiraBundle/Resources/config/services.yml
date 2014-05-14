@@ -1,7 +1,36 @@
 parameters:
 #    edahira_dahira.example.class: Edahira\DahiraBundle\Example
-
+    edahira_dahira.charge.class: Edahira\DahiraBundle\Services\Charge
+    edahira_dahira.cotisation.class: Edahira\DahiraBundle\Services\Cotisation
+    edahira_dahira.caisse.class: Edahira\DahiraBundle\Services\Caisse
+    edahira_dahira.listener.class: Edahira\DahiraBundle\EventListener\Kernel
 services:
 #    edahira_dahira.example:
 #        class: %edahira_dahira.example.class%
 #        arguments: [@service_id, "plain_value", %parameter%]
+    edahira_dahira.charge:
+        class: %edahira_dahira.charge.class%
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: twig.extension }
+    edahira_dahira.cotisation:
+        class: %edahira_dahira.cotisation.class%
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+        tags:
+            - { name: twig.extension }
+    edahira_dahira.caisse:
+        class: %edahira_dahira.caisse.class%
+        arguments: 
+            entityManager: "@doctrine.orm.entity_manager"
+            charge: @edahira_dahira.charge
+        tags:
+            - { name: twig.extension }
+    edahira_dahira.requestlistener:
+        class: %edahira_dahira.listener.class%
+        arguments: 
+            router: @router
+            service_container: @service_container
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }

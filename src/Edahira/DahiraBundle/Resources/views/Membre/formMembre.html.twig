@@ -1,12 +1,14 @@
-<form class="form-horizontal" action="{{ path('membre_editer',{'id': id}) }}" method="post" enctype="{{ form_enctype(form) }}"s>
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+<form class="form-horizontal" action="{{ path('membre_editer',{'id': membre.id}) }}" method="post" enctype="{{ form_enctype(form) }}"s>
 	{{ form_errors(form) }}
 	<fieldset>
 
 		 {{ form_widget(form) }}
 
         <div class="form-actions">
-			<input type="submit" class="btn btn-success btn-large" value={{ 'label.enregistrer'| trans}} />
-			<a class="btn" href="{{ path('event_index') }}">{{ 'label.annuler'| trans}}</a>
+			<input type="submit" class="btn btn-success btn-large" value={{ 'label.enregistrer' | trans | capitalize}} />
+			<a class="btn" href="{{ path(app.session.get('last_route')) }}">{{ 'label.annuler' | trans | capitalize}}</a>
 		</div>
 	</fieldset>
 </form>

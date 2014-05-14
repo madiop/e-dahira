@@ -1,0 +1,22 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.dahira' | lower | trans }}{% endblock %}
+
+{% block content %}
+	{% block body_content %}
+		{{ parent() }}
+	{% endblock %}
+
+	<div class="page-header">
+	    {% if dahira.id %}
+			<h1>{{ 'text.modification' | trans({'%objet%': 'dahira'}) }}</h1>
+		{% else %}
+			<h1>{{ 'text.nouveau' | trans({'%objet%': 'dahira'}) }}</h1>
+		{% endif %}
+	</div>
+
+	{% include "EdahiraDahiraBundle:Dahira:formDahira.html.twig" %}
+
+{% endblock %}

@@ -1,0 +1,46 @@
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+	{% if cotisations | length > 0 %}
+		<table class="table table-striped table-bordered table-condensed">
+			<thead align="center">
+				<tr>
+					<th>{{ 'label.membre' | trans }}</th>
+				{% for event in events %}
+					<th>
+						{% if event.membre %} {{ event.membre.affichage }}<br/> {% endif %}
+					    ({{ event.date | date('d-m-Y') }})
+					</th>
+			    {% endfor %}
+
+				</tr>
+			</thead>
+			<tbody>
+			{% for membres in cotisations %}
+				<tr class="list-users">
+					<td>{{ membres[0].membre.affichage }}</td>
+				    {% for cotisation in membres %}
+					    {% if(cotisation.etat == true) %}
+					    <td><span class="label label-success">{{'label.done' | trans}}</span></td>
+					    {% else %}
+					    <td><span class="label label-important">{{'label.undone' | trans}}</span></td>
+					    {% endif %}
+					{% endfor %}
+				</tr>
+			{% endfor %}
+			{#
+            {% for membre in membres %}
+				<tr class="list-users">
+					<td>{{ cotisation.membre.affichage }}</td>
+					{% if cotisation.etat == true %}
+						<td><span class="label label-success">{{'label.done' | trans}}</span></td>
+					{% else %}
+						<td><span class="label label-important">{{'label.undone' | trans}}</span></td>
+					{% endif %}
+				</tr>
+			{% endfor %}s
+			#} 
+			</tbody>
+		</table>
+	{% else %}
+		<p>{{ 'text.fem.aucun' | trans({'%objet%': 'cotisation'}) }}</p>
+	{% endif %}

@@ -1,0 +1,84 @@
+stats: Statistiques
+'Symfony2 is great': 'J''aime Symfony2'
+success: ' %objet% modifié avec succès'
+label.enregistrer: Enregistrer
+label.annuler: Annuler
+label.nom: Nom
+label.description: Description
+label.etat.caisse: 'Etat caisse'
+label.etat.type: 'Etat type d''évènement'
+label.etat.type.membre: 'Etat par membre'
+label.etat.versementmembre: 'Etat versement par membre'
+label.etat.charge: 'Etat charge'
+label.ouvert: Ouvert
+label.etats: Etats
+label.ferme: Fermé
+label.fermer: Fermer
+label.ouvrir: Ouvrir
+label.ajouter: Ajouter
+label.supprimer: Supprimer
+label.echeance: Echeance
+label.caisse: Caisse
+label.cotisation: Cotisation
+label.done: versé
+label.undone: 'Non versé'
+label.edit: Modifer
+label.president: Président
+label.telephone: Téléphone
+label.date: Date
+label.montant: Montant
+label.objet: __objet
+label.action: Action
+label.balancecaisse: Balance
+label.element: Source
+label.depense: Dépense
+label.totalaverse: 'Total à versé'
+label.totalverse: 'Total versé'
+label.totalrestant: 'Total restant'
+label.membre: Membre
+label.categorie: Catégorie
+label.montantverse: 'Montant versé'
+label.restant: Restant
+label.voirdetailparmembre: 'Voir détails par membre'
+label.etatcotis: 'Etat cotisation'
+label.prenom: Prénom
+label.adresse: Adresse
+label.email: E-mail
+label.tel1: 'Téléphone 1'
+label.tel2: 'Téléphone 2'
+label.periode: Période
+label.fond: Fond
+label.jourdesemaine: 'Jour de semaine'
+label.charge: Charge
+label.effectueversement: 'Effectuer un versement'
+label.administration: Administration
+label.dahira: Dahira
+label.typeevenement: 'Type d''évènement'
+label.event: Evènement
+label.events: Evènements
+label.etat: Etat
+label.evenement: Evènement
+label.depenses: Dépenses
+label.charges: Charges
+label.versement: Versement
+label.donnateur: Donnateur
+label.actions: Actions
+text.modification: 'Modification %objet%'
+text.list: 'Liste des %objet%'
+text.nouvelle: 'Nouvelle %objet%'
+text.nouveau: 'Nouveau %objet%'
+text.nouvel: 'Nouvel %objet%'
+text.aucun: 'Aucun %objet% n''est encore enregisté.'
+text.suppression: 'Merci de confirmer la suppression du %objet%!'
+text.fem.aucun: 'Aucune %objet% n''est encore enregistée.'
+text.fem.suppression: 'Merci de confirmer la suppression de la %objet%!'
+text.mas.suppression: 'Merci de confirmer la suppression de l''%objet%!'
+text.cotisation.dahira: 'Cotisation dahira %membre% le '
+text.cotisation.mensualite: 'Cotisation mensualité: '
+action.edit: Modifer
+action.delete: Supprimer
+action.details: Détails
+action.gerer: Gérer
+action.detailscotis: 'Détails cotisation'
+membre: __membre
+error: __error

@@ -1,0 +1,129 @@
+stats: Statistiques
+'Symfony2 is great': 'J''aime Symfony2'
+label:
+    enregistrer: Enregistrer
+    annuler: Annuler
+    nom: Nom
+    description: Description
+    ouvert: Ouvert
+    etats: Etats
+    ferme: Fermé
+    fermer: Fermer
+    ouvrir: Ouvrir
+    ajouter: Ajouter
+    supprimer: Supprimer
+    echeance: Echeance
+    caisse: Caisse
+    cotisation: Cotisation
+    done: Versé
+    undone: 'Non versé'
+    edit: Modifer
+    president: Président
+    telephone: Téléphone
+    date: Date
+    montant: Montant
+    objet: Objet
+    action: Action
+    actions: Actions
+    balancecaisse: Balance
+    element: Source
+    depense: Dépense
+    totalaverse: 'Total à versé'
+    totalverse: 'Total versé'
+    totalrestant: 'Total restant'
+    membre: Membre
+    categorie: Catégorie
+    montantverse: 'Montant versé'
+    restant: Restant
+    voirdetailparmembre: 'Voir détails par membre'
+    etatcotis: 'Etat cotisation'
+    prenom: Prénom
+    adresse: Adresse
+    email: E-mail
+    tel1: 'Téléphone 1'
+    tel2: 'Téléphone 2'
+    periode: Période
+    fond: Fond
+    mensualite: Mensualite
+    jourdesemaine: 'Jour de semaine'
+    charge: Charge
+    dons: Dons
+    effectueversement: 'Effectuer un versement'
+    administration: Administration
+    dahira: Dahira
+    typeevenement: 'Type d''évènement'
+    gestion: Gestion
+    event: Evènement
+    events: Evènements
+    evenement: Evènement
+    depenses: Dépenses
+    charges: Charges
+    versement: Versement
+    donnateur: Donnateur
+    etat:
+        caisse: 'Etat caisse'
+        type: 'Etat type d''évènement'
+        type.membre: 'Etat par membre'
+        versementmembre: 'Etat versement par membre'
+        charge: 'Etat charge'
+    etat: Etat
+text:
+    modification: 'Modification %objet%'
+    list: 'Liste des %objet%'
+    nouvelle: 'Nouvelle %objet%'
+    nouveau: 'Nouveau %objet%'
+    nouvel: 'Nouvel %objet%'
+    aucun: 'Aucun %objet% n''est encore enregisté.'
+    suppression: 'Merci de confirmer la suppression du %objet%!'
+    fem:
+        aucun: 'Aucune %objet% n''est encore enregistée.'
+        suppression: 'Merci de confirmer la suppression de la %objet%!'
+    mas:
+        suppression: 'Merci de confirmer la suppression de l''%objet%!'
+    cotisation: 'Cotisation %objet%: %membre%'
+    cotisation:
+        dahira: 'Cotisation dahira %membre% le '
+        mensualite: 'Cotisation mensualité: '
+    partager: 'Partage de la gestion du dahira: '
+action:
+    edit: Modifer
+    partager: Partager
+    delete: Supprimer
+    details: Détails
+    gerer: Gérer
+    detailscotis: 'Détails cotisation'
+# Form label
+form:
+    label:
+        nom: Nom :
+        prenom: Prénom :
+        description: Description :
+        president: Président :
+        telephone: Téléphone :
+        email: E-mail :
+        siege: Siège :
+        numcompte: Numéro compte :
+        fond: Fond de caisse : 
+        etat: Etat :
+        periode: Période :
+        caisse: Caisse :
+        cotisations: Cotisations :
+        jourdesemaine: Jour de semaine : Jour de semaine :
+        categorie: Catégorie :
+        adresse: Adresse :
+        tel1: Téléphone 1 :
+        tel2: Téléphone 2 :
+        typeevenement: Type d'évènement :
+        date: Date :
+        membre: Membre :
+        montant: Montant :
+        montants: Montants :
+        objet: Objet :
+        echeance: Echéance :
+        charge: Charge :
+        stay: Enregistrer un autre :
+        type: Type d'évènement :
+        utilisateur: Utilisateur :
+        donnateur: Donnateur :
+    bouton:
+        voir: Voir

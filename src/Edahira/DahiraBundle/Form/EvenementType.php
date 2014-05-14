@@ -5,24 +5,45 @@ namespace Edahira\DahiraBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class EvenementType extends AbstractType
 {
-        /**
+    /**
+     * @var integer
+     *
+     */
+    protected $dahira;
+
+    public function __construct($dahira){
+        $this->dahira = $dahira;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('date'         , 'date')/*
-                ->add('typeevenement', 'entity', array('class'    => 'EdahiraDahiraBundle:Typeevenement',
-                                                    'property' => 'nom',
-                                                    'multiple' => false,
-                                                    'expanded' => false))**/
-                ->add('membre'       ,'entity', array('class'    => 'EdahiraDahiraBundle:Membres',
-                                                    'property' => 'affichage',
-                                                    'multiple' => false,
-                                                    'expanded' => false));
+        $dahira = $this->dahira;
+        $builder->add('date'         , 'date', array('label' => 'form.label.date', 'translation_domain' => 'EdahiraDahiraBundle'))
+                ->add('typeevenement', 'entity', array('label' => 'form.label.typeevenement', 'translation_domain' => 'EdahiraDahiraBundle',
+                                                    'class'      => 'EdahiraDahiraBundle:Typeevenement',
+                                                    'property'      => 'nom',
+                                                    'multiple'      => false,
+                                                    'expanded'      => false,
+                                                    'query_builder' => function(EntityRepository $er) use ($dahira) {
+                                                        return $er->getTypes($dahira);
+                                                    }))
+                ->add('membre'       ,'entity', array('label' => 'form.label.membre', 'translation_domain' => 'EdahiraDahiraBundle',
+                                                    'class'       => 'EdahiraDahiraBundle:Membres',
+                                                    'property'      => 'affichage',
+                                                    'multiple'      => false,
+                                                    'expanded'      => false,
+                                                    'required'      => false,
+                                                    'query_builder' => function(EntityRepository $er) use ($dahira) {
+                                                        return $er->getMembres($dahira);
+                                                    }));
     }
     
     /**

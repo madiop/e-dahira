@@ -1,0 +1,20 @@
+Edahira\DahiraBundle\Entity\MontantCharges:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\MontantChargesRepository
+    id:
+        charge:
+            associationKey: true
+        categorie:
+            associationKey: true
+    fields:
+        montant:
+            type: integer
+    manyToOne:
+        charge:
+            targetEntity: Charges
+            inversedBy: montants
+        categorie:
+            targetEntity: Categories
+            inversedBy: charges
+    lifecycleCallbacks: {  }

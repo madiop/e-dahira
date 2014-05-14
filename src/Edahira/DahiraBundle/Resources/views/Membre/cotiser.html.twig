@@ -1,0 +1,30 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        [id*="form"] div {
+          display:inline-block;
+        }
+        .form-horizontal .controls{
+          margin-left: 15px;
+          margin-top: 3px;
+        }
+
+    </style>
+{% endblock %}
+
+{% block title %} {{ parent()}} | {{'label.membre' | lower | trans}} {% endblock %}
+
+{% block body_header %}
+    <h1>{{ 'text.cotisation' | trans({'%objet%': type.nom, '%membre%': membre.affichage }) }}</h1>
+{% endblock %}
+
+{% block body_content %}
+    {{ parent() }}
+    
+    {% include "EdahiraDahiraBundle:Membre:formCotiser.html.twig" %}
+
+{% endblock %}

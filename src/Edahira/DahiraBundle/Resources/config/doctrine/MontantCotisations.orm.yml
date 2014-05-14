@@ -1,0 +1,19 @@
+Edahira\DahiraBundle\Entity\MontantCotisations:
+    type: entity
+    table: null
+    id:
+        typeevenement:
+            associationKey: true
+        categorie:
+            associationKey: true
+    fields:
+        montant:
+            type: integer
+    manyToOne:
+        typeevenement:
+            targetEntity: Typeevenement
+            inversedBy: cotisations
+        categorie:
+            targetEntity: Categories
+            inversedBy: cotisations
+    lifecycleCallbacks: {  }

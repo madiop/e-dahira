@@ -1,6 +1,7 @@
 Edahira\DahiraBundle\Entity\Dahira:
     type: entity
     table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\DahiraRepository
     id:
         id:
             type: integer
@@ -8,10 +9,61 @@ Edahira\DahiraBundle\Entity\Dahira:
             generator:
                 strategy: AUTO
     fields:
-        date:
+        nom:
+            type: string
+            length: '100'
+        description:
+            type: string
+            length: '255'
+            nullable: true
+        president:
+            type: string
+            length: '100'
+        telephone:
+            type: string
+            length: '50'
+        email:
+            type: string
+            length: '50'
+            nullable: true
+        siege:
+            type: string
+            length: '255'
+            nullable: true
+        numcompte:
+            type: string
+            length: '50'
+            nullable: true
+        datecreation:
             type: date
-    manyToOne:
-        membre:
+            nullable: false
+    oneToMany:
+        caisses:
+            targetEntity: Caisses
+            mappedBy: dahira
+            cascade: [persist, remove]
+        categories:
+            targetEntity: Categories
+            mappedBy: dahira
+            cascade: [persist, remove]
+        charges:
+            targetEntity: Charges
+            mappedBy: dahira
+            cascade: [persist, remove]
+        evenement:
+            targetEntity: Evenement
+            mappedBy: dahira
+            cascade: [persist, remove]
+        membres:
             targetEntity: Membres
-            inversedBy: dahiras
+            mappedBy: dahira
+            cascade: [persist, remove]
+        typeevenement:
+            targetEntity: Typeevenement
+            mappedBy: dahira
+            cascade: [persist, remove]
+        depenses:
+            targetEntity: Depenses
+            mappedBy: dahira
+            cascade: [persist, remove]
     lifecycleCallbacks: {  }

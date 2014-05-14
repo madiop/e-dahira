@@ -1,7 +1,21 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
 
-{% block title %}EdahiraDahiraBundle:Membre:supprimer{% endblock %}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent() }} | {{'label.membre' | lower | trans }}{% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'text.suppression' | trans({'%objet%': 'membre: '~membre.affichage}) }}</h1>
+{% endblock %}
 
 {% block body_content %}
-<h1>Welcome to the Membre:supprimer page</h1>
+	{{ parent() }}
+	<form class="form-horizontal" action="{{ path('membre_supprimer',{'id': membre.id}) }}" method="post" >
+		<fieldset>
+	        <div class="form-actions">
+				<input type="submit" class="btn btn-success btn-large" value={{ 'label.supprimer'| trans}} />
+				<a class="btn" href="{{ path('membre_index') }}">{{ 'label.annuler'| trans}}</a>
+			</div>
+		</fieldset>
+	</form>
 {% endblock %}

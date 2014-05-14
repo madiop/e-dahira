@@ -34,15 +34,27 @@ class Evenement
      * @var \Edahira\DahiraBundle\Entity\Typeevenement
      */
     private $typeevenement;
+    
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $dons;
 
     /**
-     * Constructor
+     * @var \Edahira\DahiraBundle\Entity\Dahira
      */
-    public function __construct()
+    private $dahira;
+
+    /**
+     * @param \Edahira\DahiraBundle\Entity\Dahira $dahira
+     */
+    public function __construct(\Edahira\DahiraBundle\Entity\Dahira $dahira)
     {
         $this->membre = new \Doctrine\Common\Collections\ArrayCollection();
         $this->cotisations = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dons = new \Doctrine\Common\Collections\ArrayCollection();
         $this->date = new \DateTime();
+        $this->dahira = $dahira;
     }
 
     /**
@@ -179,5 +191,62 @@ class Evenement
         $this->membre = $membre;
 
         return $this;
+    }
+
+    /**
+     * Set dahira
+     *
+     * @param \Edahira\DahiraBundle\Entity\Dahira $dahira
+     * @return Evenement
+     */
+    public function setDahira(\Edahira\DahiraBundle\Entity\Dahira $dahira = null)
+    {
+        $this->dahira = $dahira;
+
+        return $this;
+    }
+
+    /**
+     * Get dahira
+     *
+     * @return \Edahira\DahiraBundle\Entity\Dahira 
+     */
+    public function getDahira()
+    {
+        return $this->dahira;
+    }
+
+
+    /**
+     * Add dons
+     *
+     * @param \Edahira\DahiraBundle\Entity\Dons $dons
+     * @return Evenement
+     */
+    public function addDon(\Edahira\DahiraBundle\Entity\Dons $dons)
+    {
+        $this->dons[] = $dons;
+
+        return $this;
+    }
+
+    /**
+     * Remove dons
+     *
+     * @param \Edahira\DahiraBundle\Entity\Dons $dons
+     */
+    public function removeDon(\Edahira\DahiraBundle\Entity\Dons $dons)
+    {
+        $this->dons->removeElement($dons);
+    }
+
+    /**
+     * Get dons
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDons()
+    {
+        return $this->dons;
     }
 }

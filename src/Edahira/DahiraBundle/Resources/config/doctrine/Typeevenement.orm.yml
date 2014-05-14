@@ -6,15 +6,11 @@ Edahira\DahiraBundle\Entity\Typeevenement:
         id:
             type: integer
             id: true
-            generator:
-                strategy: AUTO
     fields:
         nom:
             type: string
             length: '100'
         periode:
-            type: integer
-        cotisation:
             type: integer
         jourdesemaine:
             type: string
@@ -24,8 +20,17 @@ Edahira\DahiraBundle\Entity\Typeevenement:
         evenement:
             targetEntity: Evenement
             mappedBy: typeevenement
+        cotisations:
+            targetEntity: MontantCotisations
+            mappedBy: typeevenement
+            cascade: [persist]
     manyToOne:
         caisse:
             targetEntity: Caisses
             inversedBy: typeevenement
+        dahira:
+            targetEntity: Dahira
+            inversedBy: typeevenement
+            joinColumn:
+                nullable: false
     lifecycleCallbacks: {  }

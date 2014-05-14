@@ -1,0 +1,37 @@
+Edahira\DahiraBundle\Entity\Charges:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\ChargesRepository
+    id:
+        id:
+            type: integer
+            id: true
+    fields:
+        objet:
+            type: string
+            length: '100'
+        echeance:
+            type: date
+        etat:
+            type: boolean
+    oneToMany:
+        montants:
+            targetEntity: MontantCharges
+            mappedBy: charge
+            cascade: [persist]
+        versements:
+            targetEntity: Versements
+            mappedBy: charge
+        dons:
+            targetEntity: Dons
+            mappedBy: charges
+    manyToOne:
+        caisse:
+            targetEntity: Caisses
+            inversedBy: charges
+        dahira:
+            targetEntity: Dahira
+            inversedBy: charges
+            joinColumn:
+                nullable: false
+    lifecycleCallbacks: {  }

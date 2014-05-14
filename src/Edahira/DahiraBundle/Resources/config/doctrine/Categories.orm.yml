@@ -1,0 +1,32 @@
+Edahira\DahiraBundle\Entity\Categories:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\CategoriesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        nom:
+            type: string
+            length: '100'
+    oneToMany:
+        membres:
+            targetEntity: Membres
+            mappedBy: categorie
+            nullable: true
+        charges:
+            targetEntity: MontantCharges
+            mappedBy: categorie
+        cotisations:
+            targetEntity: MontantCotisations
+            mappedBy: categorie
+    manyToOne:
+        dahira:
+            targetEntity: Dahira
+            inversedBy: categories
+            joinColumn:
+                nullable: false
+    lifecycleCallbacks: {  }

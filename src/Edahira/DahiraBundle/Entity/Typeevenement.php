@@ -20,6 +20,61 @@ class Typeevenement
      */
     private $nom;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $evenement;
+
+
+    /**
+     * @var integer
+     */
+    private $periode;
+
+    /**
+     * @var string
+     */
+    private $jourdesemaine;
+
+    /**
+     * @var \Edahira\DahiraBundle\Entity\Caisses
+     */
+    private $caisse;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $cotisations;
+
+    /**
+     * @var \Edahira\DahiraBundle\Entity\Dahira
+     */
+    private $dahira;
+
+    /**
+     * Constructor
+     *
+     * @param \Edahira\DahiraBundle\Entity\Dahira $dahira
+     */
+    public function __construct(\Edahira\DahiraBundle\Entity\Dahira $dahira)
+    {
+        $this->evenement = new ArrayCollection();
+        $this->cotisations = new ArrayCollection();
+        $this->dahira = $dahira;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return Typeevenement
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -52,18 +107,6 @@ class Typeevenement
     public function getNom()
     {
         return $this->nom;
-    }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $evenement;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->evenement = new ArrayCollection();
     }
 
     /**
@@ -98,18 +141,6 @@ class Typeevenement
     {
         return $this->evenement;
     }
-
-    /**
-     * @var integer
-     */
-    private $periode;
-
-    /**
-     * @var string
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $jourdesemaine;
-
 
     /**
      * Set periode
@@ -156,40 +187,6 @@ class Typeevenement
     {
         return $this->jourdesemaine;
     }
-    
-    /**
-     * @var integer
-     */
-    private $cotisation;
-
-
-    /**
-     * Set cotisation
-     *
-     * @param integer $cotisation
-     * @return Typeevenement
-     */
-    public function setCotisation($cotisation)
-    {
-        $this->cotisation = $cotisation;
-
-        return $this;
-    }
-
-    /**
-     * Get cotisation
-     *
-     * @return integer 
-     */
-    public function getCotisation()
-    {
-        return $this->cotisation;
-    }
-    /**
-     * @var \Edahira\DahiraBundle\Entity\Caisses
-     */
-    private $caisse;
-
 
     /**
      * Set caisse
@@ -212,5 +209,61 @@ class Typeevenement
     public function getCaisse()
     {
         return $this->caisse;
+    }
+
+    /**
+     * Add cotisations
+     *
+     * @param \Edahira\DahiraBundle\Entity\MontantsCotisations $cotisations
+     * @return Typeevenement
+     */
+    public function addCotisation(\Edahira\DahiraBundle\Entity\MontantCotisations $cotisations)
+    {
+        $this->cotisations[] = $cotisations;
+
+        return $this;
+    }
+
+    /**
+     * Remove cotisations
+     *
+     * @param \Edahira\DahiraBundle\Entity\MontantsCotisations $cotisations
+     */
+    public function removeCotisation(\Edahira\DahiraBundle\Entity\MontantCotisations $cotisations)
+    {
+        $this->cotisations->removeElement($cotisations);
+    }
+
+    /**
+     * Get cotisations
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCotisations()
+    {
+        return $this->cotisations;
+    }
+
+    /**
+     * Set dahira
+     *
+     * @param \Edahira\DahiraBundle\Entity\Dahira $dahira
+     * @return Typeevenement
+     */
+    public function setDahira(\Edahira\DahiraBundle\Entity\Dahira $dahira = null)
+    {
+        $this->dahira = $dahira;
+
+        return $this;
+    }
+
+    /**
+     * Get dahira
+     *
+     * @return \Edahira\DahiraBundle\Entity\Dahira 
+     */
+    public function getDahira()
+    {
+        return $this->dahira;
     }
 }

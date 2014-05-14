@@ -1,0 +1,19 @@
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+<form class="form-horizontal" action="{{ path('don_editer', {'idType': object.id, 'type': type, 'id': don.id}) }}" method="post" enctype="{{ form_enctype(form) }}"s>
+	{{ form_errors(form) }}
+	<fieldset>
+
+		{{ form_widget(form) }}
+
+        <div class="form-actions">
+			<input type="submit" id="ajouter_don" class="btn btn-success" value={{ 'label.enregistrer'| trans}} />
+			
+			{% if type == 1 %}
+				<a class="btn" href="{{ path('cotisation_etat', {'id': object.id}) }}">{{ 'label.annuler'| trans}}</a>
+			{% elseif type == 2 %}
+				<a class="btn" href="{{ path('don_index', {'idType': object.id, 'type': type, 'id': don.id}) }}">{{ 'label.annuler'| trans}}</a>
+			{% endif %}
+		</div>
+	</fieldset>
+</form>

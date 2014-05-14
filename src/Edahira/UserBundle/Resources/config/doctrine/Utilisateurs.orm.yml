@@ -1,0 +1,26 @@
+Edahira\UserBundle\Entity\Utilisateurs:
+    type: entity
+    table: null
+    repositoryClass: Edahira\UserBundle\Entity\UtilisateursRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        name:
+            type: string
+            length: '100'
+        surname:
+            type: string
+            length: '100'
+    oneToOne:
+        activeDahira:
+            targetEntity: \Edahira\DahiraBundle\Entity\Dahira
+            cascade: [persist]
+    manyToMany:
+        dahiras:
+            targetEntity: \Edahira\DahiraBundle\Entity\Dahira
+            cascade: [persist]
+    lifecycleCallbacks: {  }

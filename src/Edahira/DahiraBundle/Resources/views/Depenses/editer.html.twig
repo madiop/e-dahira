@@ -1,0 +1,32 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	<style>
+		#edahira_dahirabundle_depenses_date select{
+		    width:73px
+		}
+	</style>
+{% endblock %}
+
+{% block title %}{{ parent()}} | {{'label.depense' | lower | trans }}{% endblock %}
+
+{% block body_header %}
+	
+	{% if depense.id %}
+		<h1>{{ 'text.modification' | trans({'%objet%': 'depense'}) }}</h1>
+	{% else %}
+		<h1>{{ 'text.nouvelle' | trans({'%objet%': 'depense'}) }}</h1>
+	{% endif %}
+
+{% endblock %}
+{% block body_content%}
+	{{ parent() }}
+
+	{% if form is defined %}
+		{% include "EdahiraDahiraBundle:Depenses:formDepenses.html.twig" %}
+	{% endif %}
+
+{% endblock %}

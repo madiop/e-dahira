@@ -1,0 +1,23 @@
+Edahira\DahiraBundle\Entity\Versements:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\VersementsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: date
+        montant:
+            type: integer
+    manyToOne:
+        charge:
+            targetEntity: Charges
+            inversedBy: versements
+        membre:
+            targetEntity: Membres
+            inversedBy: versements
+    lifecycleCallbacks: {  }

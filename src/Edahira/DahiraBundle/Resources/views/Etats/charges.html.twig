@@ -1,0 +1,45 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.etat' | lower | trans }}{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<style>
+        .page-header {
+            padding-bottom: 0px;
+        }
+	</style>
+{% endblock %}
+
+{% block body_header %}
+    {% include "EdahiraDahiraBundle:Etats:formCharges.html.twig" %}
+{% endblock %}
+
+{% block body_content %}
+    {% for message in app.session.flashbag.get('info') %}
+        <p>{{ message }}</p>
+	{% endfor %}
+    <div id="etats_charge"></div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$("#form_charge").submit(function(e){
+		    e.preventDefault();
+		    var DATA = $(this).serialize();
+		    $.ajax({
+		        type: "POST",
+		        url: "{{ path('etats_charges')}}",
+		        data: DATA,
+		        cache: false,
+		        success: function(data){
+		           $('#etats_charge').html(data);
+		        }
+		    });    
+		    return false;
+		});
+	</script>
+{% endblock %}

@@ -1,12 +1,11 @@
-<form class="form-horizontal" action="{{ path('etats_index') }}" method="post" {{ form_enctype(form) }}>
-	{{ form_errors(form) }}
-	<fieldset>
-		 
-		 {{ form_widget(form) }}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
 
-        <div class="form-actions">
-			<input type="submit" class="btn btn-success btn-large" value={{ 'label.voir'| trans | capitalize }} />
-			{# <a class="btn" href="{{ path('event_index') }}">{{ 'label.annuler'| trans}}</a> #}
+<form class="form-horizontal" id="form_type" action="{{ path('etats_evenement') }}" method="post" {{ form_enctype(form) }}>
+    <div class="control-group">
+		<label class="control-label" for="membre">{{ form_label(form.type) }}</label>
+		<div class="controls">
+			{{ form_widget(form.type) }}
+			{{ form_widget(form.voir) }}
 		</div>
-	</fieldset>
+	</div>
 </form>

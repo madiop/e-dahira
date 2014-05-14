@@ -1,6 +1,8 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
 
-{% block title %}EdahiraDahiraBundle:Membre:afficher{% endblock %}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %} {{ parent()}} | {{'label.membre' | lower | trans}} {% endblock %}
 
 {% block body %}
 <h1>Welcome to the Membre:afficher page</h1>

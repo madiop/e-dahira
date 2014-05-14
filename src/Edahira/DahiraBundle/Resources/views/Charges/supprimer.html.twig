@@ -1,0 +1,21 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.charge' | lower | trans }}{% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'text.fem.suppression' | trans({'%objet%': 'charge: '~charge.objet}) }}</h1>
+{% endblock %}
+
+{% block body_content %}
+	{{ parent() }}
+	<form class="form-horizontal" action="{{ path('charges_supprimer',{'id': charge.id}) }}" method="post" >
+		<fieldset>
+	        <div class="form-actions">
+				<input type="submit" class="btn btn-success btn-large" value={{ 'label.supprimer'| trans}} />
+				<a class="btn" href="{{ path('charges_index') }}">{{ 'label.annuler'| trans}}</a>
+			</div>
+		</fieldset>
+	</form>
+{% endblock %}

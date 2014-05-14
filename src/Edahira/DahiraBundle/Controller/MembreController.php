@@ -5,35 +5,39 @@ namespace Edahira\DahiraBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Edahira\DahiraBundle\Entity\Membres;
 use Edahira\DahiraBundle\Entity\Cotisations;
+use Edahira\DahiraBundle\Entity\Typeevenement;
 use Edahira\DahiraBundle\Form\MembresType;
 
 class MembreController extends Controller
 {
-    public function indexAction($page)
+    public function indexAction()
     {
-	    if($page < 1){
-			throw $this->createNotFoundException('Page inexistente (page = '.$page.')');
-			$page = 1;
-		}
-		$membres = $this->getDoctrine()
-						->getManager()
-						->getRepository('EdahiraDahiraBundle:Membres')
-						->getMembres(10, $page);
-
+	   	$membres = $this->get('security.context')->getToken()->getUser()->getActiveDahira()->getMembres();
+		
 		return $this->render('EdahiraDahiraBundle:Membre:index.html.twig', array(
-		                     'membres'   => $membres,
-		                     'page'       => $page,
-		                     'nombrePage' => ceil(count($membres)/10)
+		                     'membres'   => $membres
 		));
     }
 	
     public function editerAction(Membres $membre = null)
     {
+    	$user = $this->get('security.context')->getToken()->getUser();
+    	
+		if(count($user->getActiveDahira()->getCategories()) < 1){
+			$url = $this->generateUrl("categorie_editer");
+			$this->get('session')->getFlashBag()->add('html','action.create.categorie');
+            $this->get('session')->getFlashBag()->add('url',$url);
+
+			return $this->render('EdahiraDahiraBundle:Membre:editer.html.twig');
+		}
+		    	
+    	$new = false;
 		if(is_null($membre)){
-			$membre = new Membres();
+			$membre = new Membres($user->getActiveDahira());
 			$new = true;
 		}
-		$form = $this->createForm(new MembresType(), $membre);
+
+		$form = $this->createForm(new MembresType($user->getActiveDahira()->getId()), $membre);
 		
 		$request = $this->get('request');
 
@@ -46,49 +50,138 @@ class MembreController extends Controller
 				 
 				$em->persist($membre);
 				$em->flush();
-				// echo $membre->getId();exit;
+
 				if($new){
 
-					// echo 'Not exist '.$membre->getId();
-					$events = $this->getDoctrine()
-								   ->getManager()
-								   ->getRepository('EdahiraDahiraBundle:Evenement')
-								   ->findAll();
+					$events = $user->getActiveDahira()->getEvenement();
+
+					$cotisationServ = $this->container->get('edahira_dahira.cotisation');
 
 					foreach ($events as $key => $event) {
-						
+			        	$cotis = $cotisationServ->getMontantCotisation($event->getTypeevenement(), $membre->getCategorie());
+
 						$cotisation = new Cotisations();
 						$cotisation->setEvenement($event);
 						$cotisation->setMembre($membre);
 						$cotisation->setEtat(false);
-						$cotisation->setMontant($event->getTypeevenement()->getCotisation());
+						$cotisation->setMontant($cotis);
 			            $em->persist($cotisation);
 
 					}
                     $em->flush();
+
+				    $this->get('session')->getFlashBag()->add('success','flash.membre.added');
 				}
-				
-				$this->get('session')->getFlashBag()->add('info','Membre bien enregistré');
+				else{
+					$this->get('session')->getFlashBag()->add('success','flash.membre.added');
+				}
+
 				return $this->redirect($this->generateUrl('membre_index'));
 			}
 		}
-		/* 
-			*/
-		return $this->render('EdahiraDahiraBundle:Membre:editer.html.twig',array('form'=>$form->createView(), 'id'=> $membre->getId()));
+
+		return $this->render('EdahiraDahiraBundle:Membre:editer.html.twig', array(
+			'form'=>$form->createView(), 
+			'membre'=> $membre
+		));
     }
 
-    public function afficherAction()
+    public function cotiserAction(Membres $membre, Typeevenement $type)
     {
+        $cotisations = $this->getDoctrine()
+                            ->getManager()
+                            ->getRepository('EdahiraDahiraBundle:Cotisations')
+                            ->getCotisationsMembreEventType($type->getId(), $membre->getId());
+
+    	$formBuilder = $this->createFormBuilder();
+
+    	foreach ($cotisations as $cotisation) {
+    		$cotIndex = $cotisation->getMembre()->getId().'_'.$cotisation->getEvenement()->getId();
+    		// var_dump($cotisation->getEvenement()->getDate()->getTimestamp());
+
+    		// if($cotisation->getEtat()){
+    			if(strtolower($cotisation->getEvenement()->getTypeevenement()->getNom()) != 'dahira' ){
+		    		$formBuilder->add($cotIndex, 'checkbox', array(
+		    			'label'    => date("F Y", $cotisation->getEvenement()->getDate()->getTimestamp()),
+		    			'required' => false,
+		    			'attr'     => $cotisation->getEtat() ? array('checked'   => 'checked') : array() 
+		    		));
+	    	    }
+	    	    else{
+		    		$formBuilder->add($cotIndex, 'checkbox', array(
+		    			'label'    => $cotisation->getEvenement()->getMembre()->getAffichage(),
+		    			'required' => false,
+		    			'attr'     => $cotisation->getEtat() ? array('checked'   => 'checked') : array() 
+		    		));
+	    	    }
+	    	/*}
+	    	else{
+	    		if(strtolower($cotisation->getEvenement()->getTypeevenement()->getNom()) != 'dahira' ){
+		    		$formBuilder->add($cotIndex, 'checkbox', array(
+		    			'label'    => $cotisation->getEvenement()->getTypeevenement()->getNom(),
+		    			'required' => false,
+		    			'attr'     => array('checked'   => 'checked')
+		    		));
+	    	    }
+	    	    else{
+		    		$formBuilder->add($cotIndex, 'checkbox', array(
+		    			'label'    => $cotisation->getEvenement()->getMembre()->getAffichage(),
+		    			'required' => false
+		    		));
+	    	    }
+	    	}*/
+    	}
+
+    	$form = $formBuilder->getForm();
+
+		$request = $this->get('request');
+
+		if($request->getMethod() == 'POST'){
+			$form->bind($request);
+
+			$em = $this->getDoctrine()
+				       ->getManager();
+
+			$values = $form->getData();
+            // var_dump($values);exit;
+			foreach ($cotisations as $cotisation) {
+				$cotIndex = $cotisation->getMembre()->getId().'_'.$cotisation->getEvenement()->getId();
+
+				$cotisation->setEtat($values[$cotIndex]);
+                $em->persist($cotisation);
+	    		$em->flush($cotisation);
+	    	}
+	    	$this->get('session')->getFlashBag()->add('success', 'success.membre.cotise');
+			return $this->redirect($this->generateUrl('etats_membre'));
+		}
+		
+		if($this->get('session')->get('last_route') == 'etats_membre'){
+			return $this->render('EdahiraDahiraBundle:Membre:formCotiser.html.twig',array(
+				'form'       => $form->createView(),
+				'membre'     => $membre,
+				'type'       => $type
+			));
+		}
+		else{
+			return $this->render('EdahiraDahiraBundle:Membre:cotiser.html.twig',array(
+				'form'       => $form->createView()/*,
+				'membre'     => $membre,
+				'type'       => $type*/
+			));
+		}
     }
 
     public function supprimerAction(Membres $membre)
     {
-		
-		$em = $this->getDoctrine()->getManager();
-		$em->remove($membre);
-		$em->flush();
-		$this->get('session')->getFlashBag()->add('info', 'Membre supprimé avec succès');
-		
-		return $this->redirect($this->generateUrl('membre_index'));
+		if($this->get('request')->getMethod() == 'POST'){
+	    	$em = $this->getDoctrine()->getManager();
+			$em->remove($membre);
+			$em->flush();
+
+			$this->get('session')->getFlashBag()->add('success', 'success.membre.deleted');
+			
+			return $this->redirect($this->generateUrl('membre_index'));
+		}
+    	return $this->render('EdahiraDahiraBundle:Membre:supprimer.html.twig', array('membre' => $membre));
     }
 }

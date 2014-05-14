@@ -2,3 +2,15 @@
 {% block body_header %}
     <h1>Bienvenue à E-dahira</h1>
 {% endblock %}
+{% block body_content %}
+	{{ parent() }}
+	
+	<h3>A ne pas oublier</h3>
+    <ul>
+        <li><span class="label label-warning">La validation des formulaire</span></li>
+        <li><span class="label label-important">Select sur des objets null</span></li>
+        <li><span class="label label-important">Capturer les exceptions</span></li>
+        <li><span class="label label-important">Vérifier les appartenance au dahira en cours de gestion</span></li>
+        <li><span class="label label-important">Les exports Excel et PDFs</span></li>
+    </ul>
+{% endblock %}

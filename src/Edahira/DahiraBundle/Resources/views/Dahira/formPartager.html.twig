@@ -1,0 +1,14 @@
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+<form class="form-horizontal" action="{{ path('dahira_partager',{'id': dahira.id}) }}" method="post" enctype="{{ form_enctype(form) }}"s>
+	{{ form_errors(form) }}
+	<fieldset>
+
+		 {{ form_widget(form) }}
+
+        <div class="form-actions">
+			<input type="submit" class="btn btn-success btn-large" value={{ 'label.partager'| trans}} />
+			<a class="btn" href="{{ path('dahira_index') }}">{{ 'label.annuler'| trans}}</a>
+		</div>
+	</fieldset>
+</form>

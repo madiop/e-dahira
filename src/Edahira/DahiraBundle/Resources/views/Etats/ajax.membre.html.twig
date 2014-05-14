@@ -1,0 +1,52 @@
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% if cotisations | length > 0 %}
+	<table class="table table-striped table-bordered table-condensed">
+		<thead align="center">
+			<tr>
+				<th>{{ type.nom }}</th>
+			    <th>{{ 'label.etatcotis' | trans }}</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for cotisation in cotisations %}
+			<tr class="list-users">
+				<td>
+					{% if cotisation.evenement.membre %}
+						{{ cotisation.evenement.membre.affichage }} ({{ cotisation.evenement.date| date('d-m-Y') }})
+					{% elseif cotisation.evenement.typeevenement.nom | lower == 'mensualité' %}
+						{{ 'label.mensualite' | trans }} ({{ cotisation.evenement.date| date('F Y') }})
+					{% else%}
+						{{ cotisation.evenement.date| date('d-m-Y') }}
+					{% endif %}
+				</td>
+				{% if(cotisation.etat == true) %}
+				    <td><span class="label label-success">{{'label.done' | trans}}</span></td>
+				{% else %}
+				    <td><span class="label label-important">{{'label.undone' | trans}}</span></td>
+				{% endif %}
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	
+	<a id="modifier_cotisation" href="" class="btn btn-success">{{ 'label.edit' | trans }}</a>
+
+{% else %}
+	<p>{{ 'text.fem.aucun' | trans({'%objet%': 'cotisation'}) }}</p>
+{% endif %}
+
+    <script>
+		$("#modifier_cotisation").click(function(){
+		    $.ajax({
+		        type: "GET",
+		        url: "{{ path('membre_cotiser', {'membre': membre.id, 'type': type.id })}}",
+		        cache: false,
+		        success: function(data){
+		           $('#etats').html(data);
+		        }
+		    });    
+		    return false;
+		});
+
+	</script>

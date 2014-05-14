@@ -1,0 +1,21 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.categorie' | lower | trans }}{% endblock %}
+
+{% block body_header %}
+	
+	{% if categorie.id %}
+		<h1>{{ 'text.modification' | trans({'%objet%': 'categorie'}) }}</h1>
+	{% else %}
+		<h1>{{ 'text.nouvelle' | trans({'%objet%': 'categorie'}) }}</h1>
+	{% endif %}
+
+{% endblock %}
+
+{% block body_content%}
+    {{ parent() }}
+	
+	{% include "EdahiraDahiraBundle:Categorie:formCategorie.html.twig" %}
+{% endblock %}

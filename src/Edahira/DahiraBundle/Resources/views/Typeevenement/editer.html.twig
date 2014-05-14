@@ -1,10 +1,23 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
 
-{% block title %}EdahiraDahiraBundle:Typecaisse:editer{% endblock %}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.type' | lower | trans }}{% endblock %}
 
 {% block body_header %}
-	<h1>{{ 'titre.typevent.form' | trans}}</h1>
+
+	{% if type.id %}
+		<h1>{{ 'text.modification' | trans({'%objet%': 'type d\'évènement'}) }}</h1>
+	{% else %}
+		<h1>{{ 'text.nouveau' | trans({'%objet%': 'type d\'évènement'}) }}</h1>
+	{% endif %}
+
 {% endblock %}
 {% block body_content%}
-	{% include "EdahiraDahiraBundle:Typeevenement:formTypeevenement.html.twig" %}
+	{{ parent() }}
+
+    {% if form is defined %}
+		{% include "EdahiraDahiraBundle:Typeevenement:formTypeevenement.html.twig" %}
+	{% endif %}
+	
 {% endblock %}

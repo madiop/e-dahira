@@ -13,37 +13,33 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class CaissesRepository extends EntityRepository
 {
-	public function getCaisses($nombreParPage, $page){
-		
+	public function getCaisses($dahira){
 		$qb = $this->createQueryBuilder('c')
-		           ->leftJoin('c.typeCaisse','t')
-				   ->addSelect('t')
-				   ->getQuery();
-		$qb->setFirstResult(($page-1) * $nombreParPage)
-           ->setMaxResults($nombreParPage);
-           
-		return new Paginator($qb);
+                ->leftJoin('c.dahira', 'd')
+                ->addSelect('d')
+                ->where("d.id = :dahira")
+                ->setParameter('dahira', $dahira);
+                // ->getQuery();
+
+	    return $qb;//->getResult();//
 	}
 
-	public function getActivesCaisses($nombreParPage, $page){
+	public function getActivesCaisses($dahira){
 		
 		$qb = $this->createQueryBuilder('c')
-		           ->leftJoin('c.typeCaisse','t')
-				   ->addSelect('t')
-				   ->where('c.etat = '.true)
-				   ->getQuery();
-		$qb->setFirstResult(($page-1) * $nombreParPage)
-           ->setMaxResults($nombreParPage);
-           
-		return new Paginator($qb);
+                   ->leftJoin('c.dahira', 'd')
+                   ->addSelect('d')
+                   ->where("d.id = :dahira")
+                   ->setParameter('dahira', $dahira)
+				   ->andWhere('c.etat = '.true);
+				   // ->getQuery();
+		return $qb;//->getResult();
 	}
 	
 				   
 	public function getCaisse($îd){
 		
 		$qb = $this->createQueryBuilder('c')
-		           ->leftJoin('c.typeCaisse','t')
-				   ->addSelect('t')
 				   ->where('c.id = '.$id)
 				   ->getQuery();
 				   

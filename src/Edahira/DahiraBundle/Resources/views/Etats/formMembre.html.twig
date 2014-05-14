@@ -1,0 +1,14 @@
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+<form class="form-horizontal" id="form_membre" action="{{ path('etats_membre') }}" method="post" {{ form_enctype(form) }}>
+    <div class="control-group">
+		<label class="control-label" for="membre">{{ form_label(form.type) }}</label>
+		<div class="controls">
+			{{ form_widget(form.type) }}
+			{{ form_widget(form.membre) }}
+			{{ form_widget(form.voir) }}
+		</div>
+		<div class="controls">
+		</div>
+	</div>
+</form>

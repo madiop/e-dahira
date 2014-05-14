@@ -5,29 +5,50 @@ namespace Edahira\DahiraBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use Doctrine\ORM\EntityRepository;
 
 class TypeevenementType extends AbstractType
 {
-        /**
+    /**
+     * @var integer
+     *
+     */
+    protected $dahira;
+
+    public function __construct($dahira){
+        $this->dahira = $dahira;
+    }
+    
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nom'          , 'text')
+        $dahira = $this->dahira;
+        $builder->add('nom'          , 'text', array('label' => 'form.label.nom', 'translation_domain' => 'EdahiraDahiraBundle'))
                 ->add('periode'      , 'choice', array(
+                        'label' => 'form.label.periode', 
+                        'translation_domain' => 'EdahiraDahiraBundle',
                         'choices'   => array(
                             '' => '----------------------',
                             '7' => 'Hebdomadaire',
                             '30' => 'Mensuel',
                             '365' => 'Annuel'),
                         'multiple'  => false))
-                ->add('cotisation'   , 'text')
-                ->add('caisse', 'entity', array('class'    => 'EdahiraDahiraBundle:Caisses',
-                                                    'property' => 'nom',
-                                                    'multiple' => false,
-                                                    'expanded' => false))
+                ->add('caisse', 'entity', array('label' => 'form.label.caisse', 'translation_domain' => 'EdahiraDahiraBundle',
+                                                'class'    => 'EdahiraDahiraBundle:Caisses',
+                                                'property' => 'nom',
+                                                'multiple' => false,
+                                                'expanded' => false,
+                                                'query_builder' => function(EntityRepository $er) use ($dahira) {
+                                                       return $er->getActivesCaisses($dahira);
+                                                }))
+                ->add('cotisations', 'collection', array('label' => 'form.label.cotisations', 'translation_domain' => 'EdahiraDahiraBundle',
+                                                         'type' => new MontantCotisationsType($dahira)))
                 ->add('jourdesemaine', 'choice', array(
+                        'label' => 'form.label.jourdesemaine', 
+                        'translation_domain' => 'EdahiraDahiraBundle',
                         'choices'   => array(
                             '' => '----------------------',
                             'lun' => 'Lundi',

@@ -45,25 +45,18 @@ class CotisationsRepository extends EntityRepository
 		return $qb;
 	}
 
-
-	public function getCotisationsMembreEventType($idType, $idMembre, $page, $nombreParPage){
+	public function getCotisationsMembreEventType($idType, $idMembre){
 		$qb = $this->createQueryBuilder('c')
 		           ->leftJoin('c.evenement','e')
 				   ->addSelect('e')
 				   ->leftJoin('e.typeevenement','t')
 				   ->addSelect('t')
-				   ->where('t.id = '.$idType)
 		           ->leftJoin('c.membre','m')
 				   ->addSelect('m')
-				   ->where('m.id = '.$idMembre)
-				   ->orderBy('c.date', 'DESC')
+				   ->where('t.id = '.$idType)
+				   ->andWhere('m.id = '.$idMembre)
+				   ->orderBy('c.date', 'ASC')
 				   ->getQuery();
-				   
-
-		// $qb->setFirstResult(($page-1) * $nombreParPage)
-            // ->setMaxResults($nombreParPage);
-           
-		// return new Paginator($qb);
 
 		return $qb->getResult();
 	}

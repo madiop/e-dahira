@@ -4,19 +4,38 @@ namespace Edahira\DahiraBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Edahira\DahiraBundle\Entity\ChargesRepository;
+use Doctrine\ORM\EntityRepository;
 
 class EtatType extends AbstractType
 {
-        /**
+    /**
+     * @var integer
+     *
+     */
+    protected $dahira;
+
+    public function __construct($dahira){
+        $this->dahira = $dahira;
+    }
+
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('type', 'entity', array('class'    => 'EdahiraDahiraBundle:TypeEvenement',
+        $dahira = $this->dahira;
+        $builder->add('type', 'entity', array('label'    => 'form.label.type', 'translation_domain' => 'EdahiraDahiraBundle',
+                                              'class'    => 'EdahiraDahiraBundle:Typeevenement',
                                               'property' => 'nom',
                                               'multiple' => false,
-                                              'expanded' => false))
+                                              'expanded' => false,
+                                              'query_builder' => function(EntityRepository $er)  use ($dahira) {
+                                                  return $er->getTypes($dahira);
+                                               }))
+                ->add('voir', 'submit', array('label' => 'form.bouton.voir', 'translation_domain' => 'EdahiraDahiraBundle'))
+                
         ;
     }
     

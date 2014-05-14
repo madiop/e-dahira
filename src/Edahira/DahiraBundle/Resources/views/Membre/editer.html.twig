@@ -1,10 +1,24 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
 
-{% block title %}EdahiraDahiraBundle:Membre:editer{% endblock %}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %} {{ parent()}} | {{'label.membre' | lower | trans}} {% endblock %}
 
 {% block body_header %}
-	<h1>{{ 'membre.form.titre' | trans}}</h1>
+    
+    {% if membre.id %}
+		<h1>{{ 'text.modification' | trans({'%objet%': 'membre'}) }}</h1>
+	{% else %}
+		<h1>{{ 'text.nouveau' | trans({'%objet%': 'membre'}) }}</h1>
+	{% endif %}
+
 {% endblock %}
+
 {% block body_content%}
-	{% include "EdahiraDahiraBundle:Membre:formMembre.html.twig" %}
+    {{ parent() }}
+
+	{% if form is defined %}
+        {% include "EdahiraDahiraBundle:Membre:formMembre.html.twig" %}
+    {% endif %}
+
 {% endblock %}

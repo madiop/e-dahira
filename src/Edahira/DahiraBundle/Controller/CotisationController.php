@@ -14,23 +14,29 @@ class CotisationController extends Controller
 {
     public function dahiraAction(Evenement $event){
 
+    	$user = $this->get('security.context')->getToken()->getUser();
+
 		$em = $this->getDoctrine()
 				   ->getManager();
         		
-    	$membres = $this->getDoctrine()
+    	/*$membres = $this->getDoctrine()
 						->getManager()
 						->getRepository('EdahiraDahiraBundle:Membres')
-						->findAll();
+						->findAll();*/
+
+		$membres = $user->getActiveDahira()->getMembres();
 		
-        $cotis = $event->getTypeevenement()->getCotisation();
+        $cotisationServ = $this->container->get('edahira_dahira.cotisation');
 		
 		foreach ($membres as $key => $membre) {
+			$cotis = $cotisationServ->getMontantCotisation($event->getTypeevenement(), $membre->getCategorie());
 
 			$cotisation = new Cotisations();
 			$cotisation->setEvenement($event);
 			$cotisation->setMembre($membre);
 			$cotisation->setEtat(false);
 			$cotisation->setMontant($cotis);
+
             $em->persist($cotisation);
 
 		}
@@ -40,24 +46,28 @@ class CotisationController extends Controller
     }
 
     public function editerAction(Evenement $event){
+
     	$cotisations = $event->getCotisations();
 
 		$request = $this->get('request');
 
     	$formBuilder = $this->createFormBuilder();
     	//$membres = array();
+    	$cotisationServ = $this->container->get('edahira_dahira.cotisation');
 
     	foreach ($cotisations as $cotisation) {
+    		$cotis = $cotisationServ->getMontantCotisation($event->getTypeevenement(), $cotisation->getMembre()->getCategorie());
+
     		if($cotisation->getEtat()){
 	    		$formBuilder->add($cotisation->getMembre()->getId(), 'checkbox', array(
-	    			'label'    => $cotisation->getMembre()->getAffichage(),
+	    			'label'    => $cotisation->getMembre()->getAffichage()." ($cotis)",
 	    			'required' => false,
 	    			'attr'     => array('checked'   => 'checked')
 	    		));
 	    	}
 	    	else{
 	    		$formBuilder->add($cotisation->getMembre()->getId(), 'checkbox', array(
-	    			'label'    => $cotisation->getMembre()->getAffichage(),
+	    			'label'    => $cotisation->getMembre()->getAffichage()." ($cotis)",
 	    			'required' => false
 	    		));
 	    	}
@@ -82,16 +92,12 @@ class CotisationController extends Controller
 	    		$em->flush($cotisation);
 	    	}
 	    	
-
 			return $this->redirect($this->generateUrl('cotisation_etat',array('id' => $event->getId())));
 		}
 
-
 		return $this->render('EdahiraDahiraBundle:Cotisation:editer.html.twig',array(
 			'form'         => $form->createView(),
-			'event'           => $event,
-			'id'           => $event->getId(),
-			'membre'       => $event->getMembre()
+			'event'        => $event
 		));
     }
 

@@ -30,6 +30,11 @@ class Membres
      *      minMessage = "Votre nom doit faire au moins {{ limit }} caractères")
      */
     private $nom;
+    
+    /**
+     * @var boolean
+     */
+    private $sexe;
 
     /**
      * @var string
@@ -69,15 +74,32 @@ class Membres
      */
     private $etat;
 
-    
+    /**
+     * @var \Edahira\DahiraBundle\Entity\Categories
+     */
+    private $categorie;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $versements;
+
+    /**
+     * @var \Edahira\DahiraBundle\Entity\Dahira
+     */
+    private $dahira;
+
     /**
      * Constructor
+     *
+     * @param \Edahira\DahiraBundle\Entity\Dahira $dahira
      */
-    public function __construct()
+    public function __construct(\Edahira\DahiraBundle\Entity\Dahira $dahira)
     {
         $this->cotisations = new \Doctrine\Common\Collections\ArrayCollection();
         $this->dahiras = new \Doctrine\Common\Collections\ArrayCollection();
         $this->etat = true;
+        $this->dahira = $dahira;
     }
    
     /**
@@ -338,5 +360,109 @@ class Membres
         $this->dahiras = $dahiras;
 
         return $this;
+    }
+
+
+    /**
+     * Set sexe
+     *
+     * @param boolean $sexe
+     * @return Membres
+     */
+    public function setSexe($sexe)
+    {
+        $this->sexe = $sexe;
+
+        return $this;
+    }
+
+    /**
+     * Get sexe
+     *
+     * @return boolean 
+     */
+    public function getSexe()
+    {
+        return $this->sexe;
+    }
+
+    /**
+     * Set categorie
+     *
+     * @param \Edahira\DahiraBundle\Entity\Categories $categorie
+     * @return Membres
+     */
+    public function setCategorie(\Edahira\DahiraBundle\Entity\Categories $categorie = null)
+    {
+        $this->categorie = $categorie;
+
+        return $this;
+    }
+
+    /**
+     * Get categorie
+     *
+     * @return \Edahira\DahiraBundle\Entity\Categories 
+     */
+    public function getCategorie()
+    {
+        return $this->categorie;
+    }
+
+    /**
+     * Add versements
+     *
+     * @param \Edahira\DahiraBundle\Entity\Versements $versements
+     * @return Membres
+     */
+    public function addVersement(\Edahira\DahiraBundle\Entity\Versements $versements)
+    {
+        $this->versements[] = $versements;
+
+        return $this;
+    }
+
+    /**
+     * Remove versements
+     *
+     * @param \Edahira\DahiraBundle\Entity\Versements $versements
+     */
+    public function removeVersement(\Edahira\DahiraBundle\Entity\Versements $versements)
+    {
+        $this->versements->removeElement($versements);
+    }
+
+    /**
+     * Get versements
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVersements()
+    {
+        return $this->versements;
+    }
+
+
+    /**
+     * Set dahira
+     *
+     * @param \Edahira\DahiraBundle\Entity\Dahira $dahira
+     * @return Membres
+     */
+    public function setDahira(\Edahira\DahiraBundle\Entity\Dahira $dahira = null)
+    {
+        $this->dahira = $dahira;
+
+        return $this;
+    }
+
+    /**
+     * Get dahira
+     *
+     * @return \Edahira\DahiraBundle\Entity\Dahira 
+     */
+    public function getDahira()
+    {
+        return $this->dahira;
     }
 }

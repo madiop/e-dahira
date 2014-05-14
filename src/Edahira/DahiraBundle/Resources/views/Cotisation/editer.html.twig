@@ -1,4 +1,7 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <style>
@@ -14,12 +17,18 @@
     </style>
 {% endblock %}
 
-{% block title %} {{ 'titre.page.cotisation.editer' | trans}}{% endblock %}
+{% block title %} {{ parent()}} | {{'label.cotisation' | lower | trans }}{% endblock %}
+
 {% block body_header %}
-	<h1>Dahira <small>{{membre.affichage}} le {{ event.date | date('d-m-Y')}}</small></h1>
+    
+    {% if event.typeevenement.nom | lower == 'dahira' %}
+        <h1>{{ 'text.cotisation.dahira' | trans({'%membre%': event.membre.affichage }) }}<small>{{ event.date | date('d-m-Y')}}</small></h1>
+    {% elseif event.typeevenement.nom | lower == 'mensualité' %}
+        {{ 'text.cotisation.mensualite' | trans({'%mois%': event.date | date('M-Y') }) }}<small></h1>
+    {% endif %}
+
 {% endblock %}
 
 {% block body_content %}
      {% include "EdahiraDahiraBundle:Cotisation:formCotisation.html.twig" %}
-
 {% endblock %}

@@ -1,0 +1,56 @@
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+<form class="form-horizontal" action="{{ path('charges_editer',{'id': charge.id}) }}" method="post" {{ form_enctype(form) }}>
+	{{ form_errors(form) }}
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label" for="">{{ form_label(form.objet) }}</label>
+			<div class="controls">
+				{{ form_widget(form.objet) }}
+				{{ form_errors(form.objet) }}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="">{{ form_label(form.echeance) }}</label>
+			<div class="controls">
+				{{ form_widget(form.echeance) }}
+				{{ form_errors(form.echeance) }}
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label" for="">{{ form_label(form.caisse) }}</label>
+			<div class="controls">
+				{{ form_widget(form.caisse) }}
+				{{ form_errors(form.caisse) }}
+			</div>
+		</div>
+
+		{% for montant in form.montants %}
+		<div class="control-group">
+			<label class="control-label" for="">{{ form_label(form.montants) }}</label>
+			<div class="controls">
+				{{ form_widget(montant.categorie) }}
+				{{ form_errors(montant.categorie) }}
+				{{ form_widget(montant.montant) }}
+				{{ form_errors(montant.montant) }}
+			</div>
+		</div>
+		{% endfor %}
+
+		<div class="control-group">
+			<label class="control-label" for="">{{ form_label(form.etat) }}</label>
+			<div class="controls">
+				{{ form_widget(form.etat) }}
+				{{ form_errors(form.etat) }}
+			</div>
+		</div>
+
+
+		{{ form_rest(form) }} 
+
+        <div class="form-actions">
+			<input type="submit" class="btn btn-success btn-large" value={{ 'label.enregistrer'| trans}} />
+			<a class="btn" href="{{ path(app.session.get('last_route').name)}}">{{ 'label.annuler'| trans}}</a>
+		</div>
+	</fieldset>
+</form>

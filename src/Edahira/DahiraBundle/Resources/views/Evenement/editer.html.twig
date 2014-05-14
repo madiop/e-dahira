@@ -1,26 +1,31 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
 {% block stylesheets %}
-{{ parent() }}
-<style>
-#edahira_dahirabundle_evenement_date select{
-    width:73px
-}
-
-</style>
+	{{ parent() }}
+	<style>
+		#edahira_dahirabundle_evenement_date select{
+		    width:73px
+		}
+	</style>
 {% endblock %}
 
-{% block title %}{{ 'titre.page.evenement.editer' | trans}}{% endblock %}
+{% block title %}{{ parent()}} | {{'label.evenement' | lower | trans }}{% endblock %}
+
 {% block body_header %}
-	<h1>{{ 'titre.page.evenement.editer' | trans}}</h1>
+	{% if evenement.id %}
+		<h1>{{ 'text.modification' | trans({'%objet%': 'évènement'}) }}</h1>
+	{% else %}
+		<h1>{{ 'text.nouvel' | trans({'%objet%': 'évènement'}) }}</h1>
+	{% endif %}
 {% endblock %}
-{% block body_content %}
-    {% include "EdahiraDahiraBundle:Evenement:formEvenement.html.twig" %}
 
-    {#
-    <div class="row-fluid">
-    	<hr class="niveau">
-    	bonjour
-	</div>
-    #}
+{% block body_content %}
+    {{ parent() }}
+
+    {% if form is defined %}
+   		{% include "EdahiraDahiraBundle:Evenement:formEvenement.html.twig" %}
+    {% endif %}
 	
 {% endblock %}

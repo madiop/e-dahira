@@ -13,39 +13,26 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class EvenementRepository extends EntityRepository
 {
-	public function getEvenements($nombreParPage, $page){
-		
+	public function getEvenements($dahira){
 		$qb = $this->createQueryBuilder('e')
-		           ->leftJoin('e.typeevenement','t')
-				   ->addSelect('t')
-		           ->leftJoin('e.membre','m')
-				   ->addSelect('m')
-				   ->getQuery();
-		$qb->setFirstResult(($page-1) * $nombreParPage)
-           ->setMaxResults($nombreParPage);
-           
-		return new Paginator($qb);
-	}	
-				   
-	public function getEvenement($id){
-		
-		$qb = $this->createQueryBuilder('e')
-		           ->leftJoin('e.typeevenement','t')
-				   ->addSelect('t')
-		           ->leftJoin('e.membre','m')
-				   ->addSelect('m')
-				   ->where('e.id = '.$id)
-				   ->getQuery();
-        return $qb->getResult();
-	}
+                ->leftJoin('e.dahira', 'd')
+                ->addSelect('d')
+                ->where("d.id = :dahira")
+                ->setParameter('dahira', $dahira);
+                // ->getQuery();
 
+	    return $qb;//->getResult();//
+	}
+	
 	public function getEvenementType($id){
 		
 		$qb = $this->createQueryBuilder('e')
 		           ->leftJoin('e.typeevenement','t')
 				   ->addSelect('t')
-				   ->where('t.id = '.$id)
+				   ->where('t.id = :id')
+				   ->setParameter('id', $id)
 				   ->getQuery();
+
         return $qb->getResult();
 	}
 }

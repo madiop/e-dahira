@@ -1,0 +1,12 @@
+parameters:
+#    edahira_user.example.class: Edahira\UserBundle\Example
+    edahira_user.utilisateurs.class: Edahira\UserBundle\Form\UtilisateursType
+services:
+#    edahira_user.example:
+#        class: %edahira_user.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
+    acme_user.registration.form.type:
+        class: %edahira_user.utilisateurs.class%
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: edahira_userbundle_utilisateurs }

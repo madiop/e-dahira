@@ -1,0 +1,18 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.dahira' | lower | trans }}{% endblock %}
+
+{% block content %}
+	{% block body_content %}
+		{{ parent() }}
+	{% endblock %}
+
+	<div class="page-header">
+	    <h1>{{ 'text.partager' | trans }}<small>{{ dahira.nom }}</small></h1>
+	</div>
+
+	{% include "EdahiraDahiraBundle:Dahira:formPartager.html.twig" %}
+
+{% endblock %}

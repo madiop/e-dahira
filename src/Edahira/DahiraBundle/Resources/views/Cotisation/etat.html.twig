@@ -1,50 +1,96 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
 
-{% block title %}{{'titre.cotisation.etat' | trans}}{% endblock %}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #edahira_dahirabundle_dons_date select{
+            width:73px
+        }
+    </style>
+{% endblock %}
+
+{% block title %}{{ parent()}} | {{'label.cotisation' | lower | trans }}{% endblock %}
 
 {% block body_header %}
-	<h2>Dahira <small>{{event.membre.affichage}} le {{ event.date | date('d-m-Y')}}</small></h2>
+    {% if event.typeevenement.nom | lower == 'dahira' %}
+        <h1>{{ 'text.cotisation.dahira' | trans({'%membre%': event.membre.affichage }) }}<small>{{ event.date | date('d-m-Y')}}</small></h1>
+    {% elseif event.typeevenement.nom | lower == 'mensualité' %}
+        <h1>{{ 'text.cotisation.mensualite' | trans }} &</h1>
+    {% endif %}
+
 {% endblock %}
 {% block body_content %}
-	{% for message in app.session.flashbag.get('info') %}
-	<p>{{ message }}</p>
-	{% endfor %}
-	
-	{% if event.cotisations | length > 0 %}
-		<table class="table table-striped table-bordered table-condensed">
-			<thead>
-				<tr>
-					<th>{{ 'label.nom'| trans | upper }}</th>
-					<th>{{ 'label.cotisation'| trans | upper }}</th>
-				</tr>
-			</thead>
-			<tbody>
-			{% for cotisation in event.cotisations %}
-				<tr class="list-users">
-					<td>{{ cotisation.membre.affichage }}</td>
-					{% if cotisation.etat == true %}
-						<td><span class="label label-success">{{'label.done' | trans}}</span></td>
-					{% else %}
-						<td><span class="label label-important">{{'label.undone' | trans}}</span></td>
-					{% endif %}
-				</tr>
-			{% endfor %}
-			</tbody>
-		</table>
-		{#
-		<div class="pagination">
-			<ul>
-				{% for p in range(1, nombrePage) %}
-				<li{% if p == page %} class="active"{% endif %}>
-					<a href="{{ path('membre_index', {'page': p}) }}">{{ p}}</a>
-				</li>
-				{% endfor %}
-			</ul>
-		</div>
-		#}
-		{% else %}
-			<p>{{ 'text.membre.aucun' | trans }}</p>
-		{% endif %}
-     	<a href="{{ path('cotisation_editer', {'id': event.id}) }}" class="btn btn-success">{{ 'label.edit' | trans }}</a>
 
+    {{ parent() }}
+    
+    {% if event.cotisations | length > 0 %}
+        <table class="table table-striped table-bordered table-condensed">
+            <thead>
+                <tr>
+                    <th>{{ 'label.nom'| trans | upper }}</th>
+                    <th>{{ 'label.cotisation'| trans | upper }}</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for cotisation in event.cotisations %}
+                <tr class="list-users">
+                    <td>{{ cotisation.membre.affichage }}</td>
+                    {% if cotisation.etat == true %}
+                        <td><span class="label label-success">{{'label.done' | trans}}</span></td>
+                    {% else %}
+                        <td><span class="label label-important">{{'label.undone' | trans}}</span></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+    {% else %}
+        <p>{{ 'text.aucun' | trans({'%objet%': 'membre' }) }}</p>
+    {% endif %}
+        <a href="{{ path('cotisation_editer', {'id': event.id}) }}" class="btn btn-success">{{ 'label.edit' | trans }}</a>
+
+    <div class="page-header">
+        <h1><small>{{ 'label.dons' | trans }}</small></h1>
+    </div>
+    <div id="dons_id" style="width:45%">
+        {{ render(controller('EdahiraDahiraBundle:Don:index', {'type': 1, 'idType': event.id})) }}
+        
+        <a id="ajouter_don" href="" class="btn btn-success">{{ 'label.ajouter' | trans }}</a>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $("#ajouter_don").click(function(e){
+            /* e.preventDefault(); */
+            /* var DATA = $(this).serialize(); */
+            $.ajax({
+                type: "GET",
+                url: "{{ path('don_editer', {'idType': event.id, 'type': 1, 'id': null})}}",
+             /* data: DATA,*/
+                cache: false,
+                success: function(data){
+                   $('#dons_id').html(data);
+                }
+            });    
+            return false;
+        });
+        function editDon(don){
+            /* alert(link); */
+            $.ajax({
+                type: "GET",
+                url: don,
+                cache: false,
+                success: function(data){
+                   $('#dons_id').html(data);
+                }
+            });    
+            return false;
+        }
+    </script>
 {% endblock %}

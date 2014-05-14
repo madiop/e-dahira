@@ -1,0 +1,59 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.etat' | lower | trans }}{% endblock %}
+
+{% block stylesheets %}
+	{{parent()}}
+	<style>
+        .page-header {
+            padding-bottom: 0px;
+        }
+        #edahira_dahirabundle_versements_date select{
+            width:73px
+        }
+	</style>
+{% endblock %}
+
+{% block body_header %}
+    {% include "EdahiraDahiraBundle:Etats:formChargemembre.html.twig" %}
+{% endblock %}
+
+{% block body_content %}
+    {{ parent() }}
+    <div id="etats_chargemembre"></div>
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	<script>
+		$("#form_chargemembre").submit(function(e){
+		    e.preventDefault();
+		    var DATA = $(this).serialize();
+		    $.ajax({
+		        type: "POST",
+		        url: "{{ path('etats_chargemembre')}}",
+		        data: DATA,
+		        cache: false,
+		        success: function(data){
+		           $('#etats_chargemembre').html(data);
+		        }
+		    });    
+		    return false;
+		});
+
+        function editVersement(versement){
+            /* alert(link); */
+            $.ajax({
+                type: "GET",
+                url: versement,
+                cache: false,
+                success: function(data){
+                   $('#etats_chargemembre').html(data);
+                }
+            });    
+            return false;
+        }
+	</script>
+{% endblock %}

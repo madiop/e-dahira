@@ -1,0 +1,28 @@
+Edahira\DahiraBundle\Entity\Depenses:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\DepensesRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: date
+        montant:
+            type: integer
+        objet:
+            type: string
+            length: 255
+    manyToOne:
+        caisse:
+            targetEntity: Caisses
+            inversedBy: depenses
+        dahira:
+            targetEntity: Dahira
+            inversedBy: depenses
+            joinColumn:
+                nullable: false
+    lifecycleCallbacks: {  }

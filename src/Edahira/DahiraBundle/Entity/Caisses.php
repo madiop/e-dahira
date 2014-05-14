@@ -3,7 +3,7 @@
 namespace Edahira\DahiraBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Edahira\DahiraBundle\Entity\Typecaisses;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Caisses
@@ -19,23 +19,6 @@ class Caisses
      * @var string
      */
     private $nom;
-
-    /**
-     * @var integer
-     */
-    private $cotisation;
-    
-    /**
-     * @ORM\ManyToOne(targetEntity="Typecaisses", inversedBy="caisses", cascade={"persist"})
-     * @ORM\JoinColumn(name="typecaisse_id", referencedColumnName="id", nullable=false)
-     */
-    private $typeCaisse;
-
-
-	/**
-     * @var \DateTime
-     */
-    private $jour;
 	
 	/**
      * @var Boolean
@@ -43,16 +26,61 @@ class Caisses
     private $etat;
 
     /**
+     * @var string
+     */
+    private $description;
+    
+    /**
+     * @var integer
+     */
+    private $fond;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $depenses;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $typeevenement;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $charges;
+
+    /**
+     * @var \Edahira\DahiraBundle\Entity\Dahira
+     */
+    private $dahira;
+
+    /**
      * Constructor.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(\Edahira\DahiraBundle\Entity\Dahira $dahira)
     {
         $this->etat = true;
-        $this->jour = new \DateTime();
+        $this->fond = 0;
+        $this->dahira = $dahira;
+        $this->typeevenement = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->charges = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->depenses = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    /**
+     * Set id
+     *
+     * @return integer 
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -87,77 +115,7 @@ class Caisses
         return $this->nom;
     }
 
-    /**
-     * Set cotisation
-     *
-     * @param integer $cotisation
-     * @return Caisses
-     */
-    public function setCotisation($cotisation)
-    {
-        $this->cotisation = $cotisation;
-
-        return $this;
-    }
-
-    /**
-     * Get cotisation
-     *
-     * @return integer 
-     */
-    public function getCotisation()
-    {
-        return $this->cotisation;
-    }
-
-    /**
-     * Set typeCaisse
-     *
-     * @param \stdClass $typeCaisse
-     * @return Caisses
-     */
-    public function setTypeCaisse($typeCaisse)
-    {
-        $this->typeCaisse = $typeCaisse;
-
-        return $this;
-    }
-
-    /**
-     * Get typeCaisse
-     *
-     * @return \stdClass 
-     */
-    public function getTypeCaisse()
-    {
-        return $this->typeCaisse;
-    }
-    
-
-    /**
-     * Set jour
-     *
-     * @param \DateTime $jour
-     * @return Caisses
-     */
-    public function setJour($jour)
-    {
-        $this->jour = $jour;
-
-        return $this;
-    }
-
-    /**
-     * Get jour
-     *
-     * @return \DateTime 
-     */
-    public function getJour()
-    {
-        return $this->jour;
-    }
-
-
+  
     /**
      * Set etat
      *
@@ -180,42 +138,174 @@ class Caisses
     {
         return $this->etat;
     }
-    /**
-     * @var \Doctrine\Common\Collections\Collection
-     */
-    private $cotisations;
-
 
     /**
-     * Add cotisations
+     * Set description
      *
-     * @param \Edahira\DahiraBundle\Entity\Cotisations $cotisations
+     * @param string $description
      * @return Caisses
      */
-    public function addCotisation(\Edahira\DahiraBundle\Entity\Cotisations $cotisations)
+    public function setDescription($description)
     {
-        $this->cotisations[] = $cotisations;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Remove cotisations
+     * Get description
      *
-     * @param \Edahira\DahiraBundle\Entity\Cotisations $cotisations
+     * @return string 
      */
-    public function removeCotisation(\Edahira\DahiraBundle\Entity\Cotisations $cotisations)
+    public function getDescription()
     {
-        $this->cotisations->removeElement($cotisations);
+        return $this->description;
     }
 
     /**
-     * Get cotisations
+     * Set fond
+     *
+     * @param integer $fond
+     * @return Caisses
+     */
+    public function setFond($fond)
+    {
+        $this->fond = $fond;
+
+        return $this;
+    }
+
+    /**
+     * Get fond
+     *
+     * @return integer 
+     */
+    public function getFond()
+    {
+        return $this->fond;
+    }
+
+    /**
+     * Add typeevenement
+     *
+     * @param \Edahira\DahiraBundle\Entity\Typeevenement $typeevenement
+     * @return Caisses
+     */
+    public function addTypeevenement(\Edahira\DahiraBundle\Entity\Typeevenement $typeevenement)
+    {
+        $this->typeevenement[] = $typeevenement;
+
+        return $this;
+    }
+
+    /**
+     * Remove typeevenement
+     *
+     * @param \Edahira\DahiraBundle\Entity\Typeevenement $typeevenement
+     */
+    public function removeTypeevenement(\Edahira\DahiraBundle\Entity\Typeevenement $typeevenement)
+    {
+        $this->typeevenement->removeElement($typeevenement);
+    }
+
+    /**
+     * Get typeevenement
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getCotisations()
+    public function getTypeevenement()
     {
-        return $this->cotisations;
+        return $this->typeevenement;
+    }
+
+
+    /**
+     * Add charges
+     *
+     * @param \Edahira\DahiraBundle\Entity\Charges $charges
+     * @return Caisses
+     */
+    public function addCharge(\Edahira\DahiraBundle\Entity\Charges $charges)
+    {
+        $this->charges[] = $charges;
+
+        return $this;
+    }
+
+    /**
+     * Remove charges
+     *
+     * @param \Edahira\DahiraBundle\Entity\Charges $charges
+     */
+    public function removeCharge(\Edahira\DahiraBundle\Entity\Charges $charges)
+    {
+        $this->charges->removeElement($charges);
+    }
+
+    /**
+     * Get charges
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getCharges()
+    {
+        return $this->charges;
+    }
+
+
+    /**
+     * Add depenses
+     *
+     * @param \Edahira\DahiraBundle\Entity\Depenses $depenses
+     * @return Caisses
+     */
+    public function addDepense(\Edahira\DahiraBundle\Entity\Depenses $depenses)
+    {
+        $this->depenses[] = $depenses;
+
+        return $this;
+    }
+
+    /**
+     * Remove depenses
+     *
+     * @param \Edahira\DahiraBundle\Entity\Depenses $depenses
+     */
+    public function removeDepense(\Edahira\DahiraBundle\Entity\Depenses $depenses)
+    {
+        $this->depenses->removeElement($depenses);
+    }
+
+    /**
+     * Get depenses
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDepenses()
+    {
+        return $this->depenses;
+    }
+
+    /**
+     * Set dahira
+     *
+     * @param \Edahira\DahiraBundle\Entity\Dahira $dahira
+     * @return Caisses
+     */
+    public function setDahira(\Edahira\DahiraBundle\Entity\Dahira $dahira = null)
+    {
+        $this->dahira = $dahira;
+
+        return $this;
+    }
+
+    /**
+     * Get dahira
+     *
+     * @return \Edahira\DahiraBundle\Entity\Dahira 
+     */
+    public function getDahira()
+    {
+        return $this->dahira;
     }
 }

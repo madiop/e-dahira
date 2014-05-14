@@ -1,0 +1,56 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.dahira' | lower | trans }}{% endblock %}
+
+
+{% block content %}
+	{% block body_content %}
+		{{ parent() }}
+	{% endblock %}
+
+	<div class="page-header">
+   	 	<h1>{{ 'text.list' | trans({'%objet%': 'dahiras'}) }}</h1>
+   	</div>
+
+	{% if dahiras | length > 0 %}
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>{{ 'label.nom'| trans }}</th>
+					<th>{{ 'label.description'| trans }}</th>
+					<th>{{ 'label.president'| trans }}</th>
+					<th>{{ 'label.telephone'| trans }}</th>
+					<th>{{ 'label.actions'| trans }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for dahira in dahiras %}
+				<tr class="list-users">
+					<td>{{ dahira.nom }}</td>
+					<td>{{ dahira.description }}</td>
+					<td>{{ dahira.president }}</td>
+					<td>{{ dahira.telephone }}</td>
+					<td>
+						<div class="btn-group">
+							<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">{{ 'label.actions'| trans }} <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="{{ path('dahira_gerer', {'id': dahira.id}) }}"><i class="icon-lock"></i> {{ 'action.gerer' | trans }}</a></li>
+								<li><a href="{{ path('dahira_partager', {'id': dahira.id}) }}"><i class="icon-share"></i> {{ 'action.partager' | trans }}</a></li>
+								<li><a href="{{ path('dahira_editer', {'id': dahira.id}) }}"><i class="icon-pencil"></i> {{ 'action.edit' | trans }}</a></li>
+								<li><a href="{{ path('dahira_supprimer', {'id': dahira.id}) }}"><i class="icon-trash"></i> {{ 'action.delete' | trans }}</a></li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		
+	{% else %}
+		<p>{{ 'text.aucun' | trans({'%objet%': 'dahira'}) }}</p>
+	{% endif %}
+	<a href="{{ path('dahira_editer') }}" class="btn btn-success">{{ 'label.ajouter' | trans }}</a>
+
+{% endblock %}

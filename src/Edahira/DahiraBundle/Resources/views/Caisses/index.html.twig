@@ -1,33 +1,31 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
-{% block title %}{{ 'caisse.list' | trans }}{% endblock %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.caisse' | lower | trans }}{% endblock %}
 
 {% block body_header %}
-	<h1>{{ 'caisse.list' | trans }}</h1>
+	<h1>{{ 'text.list' | trans({'%objet%': 'caisses'}) }}</h1>
 {% endblock %}
+
 {% block body_content %}
-	{% for message in app.session.flashbag.get('info') %}
-	<p>{{ message }}</p>
-	{% endfor %}
+	{{ parent() }}
 	
 	{% if caisses | length > 0 %}
 		<table class="table table-striped table-bordered table-condensed">
 			<thead>
 				<tr>
 					<th>{{ 'label.nom'| trans }}</th>
-					<th>{{ 'label.type'| trans }}</th>
-					<th>{{ 'label.cotisation'| trans }}</th>
-					<th>{{ 'label.jour'| trans }}</th>
+					<th>{{ 'label.description'| trans }}</th>
 					<th>{{ 'label.etat'| trans }}</th>
-					<th>Actions</th>
+					<th>{{ 'label.actions'| trans }}</th>
 				</tr>
 			</thead>
 			<tbody>
 			{% for caisse in caisses %}
 				<tr class="list-users">
 					<td>{{ caisse.nom }}</td>
-					<td>{{ caisse.typeCaisse.nom }}</td>
-					<td>{{ caisse.cotisation }}</td>
-					<td>{{ caisse.jour| date("d/m/Y") }}</td>
+					<td>{{ caisse.description }}</td>
 					{% if caisse.etat == true %}
 						<td><span class="label label-success">{{ 'label.ouvert' | trans}}</span></td>
 					{% else %}
@@ -35,11 +33,10 @@
 					{% endif %}
 					<td>
 						<div class="btn-group">
-							<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+							<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">{{ 'label.actions'| trans }} <span class="caret"></span></a>
 							<ul class="dropdown-menu">
 								<li><a href="{{ path('caisse_editer', {'id': caisse.id}) }}"><i class="icon-pencil"></i> {{ 'action.edit' |trans }}</a></li>
 								<li><a href="{{ path('caisse_supprimer', {'id': caisse.id}) }}"><i class="icon-trash"></i> {{ 'action.delete' |trans }}</a></li>
-								<li><a href="{{ path('caisse_afficher', {'id': caisse.id}) }}"><i class="icon-user"></i> {{ 'action.details' |trans }}</a></li>
                             {% if caisse.etat == true %}
 								<li><a href="{{ path('caisse_changeretat', {'id': caisse.id, etat: 0}) }}"><i class="icon-folder-close"></i> {{ 'label.fermer' | trans}}</a></li>
 							{% else %}
@@ -52,17 +49,9 @@
 			{% endfor %}
 			</tbody>
 		</table>
-		<div class="pagination">
-			<ul>
-				{% for p in range(1, nombrePage) %}
-				<li{% if p == page %} class="active"{% endif %}>
-					<a href="{{ path('caisse_index', {'page': p}) }}">{{ p}}</a>
-				</li>
-				{% endfor %}
-			</ul>
-		</div>
+		
 	{% else %}
-		<p>{{ 'text.type.aucun' | trans }}</p>
+		<p>{{ 'text.fem.aucun' | trans({'%objet%': 'caisse'}) }}</p>
 	{% endif %}
 	<a href="{{ path('caisse_editer') }}" class="btn btn-success">{{ 'label.ajouter' | trans }}</a>
 {% endblock %}

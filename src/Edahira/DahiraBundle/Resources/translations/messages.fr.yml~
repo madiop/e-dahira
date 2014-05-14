@@ -1,19 +1,96 @@
-membre: Membre
-membre.nouveau: Nouveau
-membre.liste: 'Liste des membres du dahira'
 stats: Statistiques
 'Symfony2 is great': 'J''aime Symfony2'
-membre.form.titre: 'Formulaire nouveau membre'
-membre.prenom: Prénom
-membre.nom: Nom
-membre.adresse: Adresse
-membre.email: E-mail
-membre.tel1: 'Téléphone 1'
-membre.tel2: 'Téléphone 2'
-membre.etat: Etat
-bouton.enregistrer: Enregistrer
-bouton.annuler: Annuler
-membre.ajouter: 'Nouveau membre'
-action.edit: Modifer
-action.delete: Supprimer
-action.details: Détails
+label:
+    enregistrer: Enregistrer
+    annuler: Annuler
+    nom: Nom
+    description: Description
+    etat:
+        caisse: 'Etat caisse'
+        type: 'Etat type d''évènement'
+        type.membre: 'Etat par membre'
+        versementmembre: 'Etat versement par membre'
+        charge: 'Etat charge'
+    ouvert: Ouvert
+    etats: Etats
+    ferme: Fermé
+    fermer: Fermer
+    ouvrir: Ouvrir
+    ajouter: Ajouter
+    supprimer: Supprimer
+    echeance: Echeance
+    caisse: Caisse
+    cotisation: Cotisation
+    done: versé
+    undone: 'Non versé'
+    edit: Modifer
+    president: Président
+    telephone: Téléphone
+    date: Date
+    montant: Montant
+    objet: Objet
+    action: Action
+    balancecaisse: Balance
+    element: Source
+    depense: Dépense
+    totalaverse: 'Total à versé'
+    totalverse: 'Total versé'
+    totalrestant: 'Total restant'
+    membre: Membre
+    categorie: Catégorie
+    montantverse: 'Montant versé'
+    restant: Restant
+    voirdetailparmembre: 'Voir détails par membre'
+    etatcotis: 'Etat cotisation'
+    prenom: Prénom
+    adresse: Adresse
+    email: E-mail
+    tel1: 'Téléphone 1'
+    tel2: 'Téléphone 2'
+    periode: Période
+    fond: Fond
+    mensualite: __    mensualite
+    jourdesemaine: 'Jour de semaine'
+    charge: Charge
+    effectueversement: 'Effectuer un versement'
+    administration: Administration
+    dahira: Dahira
+    typeevenement: 'Type d''évènement'
+    event: Evènement
+    events: Evènements
+    etat: Etat
+    evenement: Evènement
+    depenses: Dépenses
+    charges: Charges
+    versement: Versement
+    donnateur: Donnateur
+    actions: Actions
+text:
+    modification: 'Modification %objet%'
+    list: 'Liste des %objet%'
+    nouvelle: 'Nouvelle %objet%'
+    nouveau: 'Nouveau %objet%'
+    nouvel: 'Nouvel %objet%'
+    aucun: 'Aucun %objet% n''est encore enregisté.'
+    suppression: 'Merci de confirmer la suppression du %objet%!'
+    fem:
+        aucun: 'Aucune %objet% n''est encore enregistée.'
+        suppression: 'Merci de confirmer la suppression de la %objet%!'
+    mas:
+        suppression: 'Merci de confirmer la suppression de l''%objet%!'
+    cotisation: 'Cotisation %objet%: %membre%'
+    cotisation:
+        dahira: 'Cotisation dahira %membre% le '
+        mensualite: 'Cotisation mensualité: '
+    partager: 'Partage de la gestion du dahira: '
+action:
+    edit: Modifer
+    partager: Partager
+    delete: Supprimer
+    details: Détails
+    gerer: Gérer
+    detailscotis: 'Détails cotisation'
+# Form label
+form:
+    label:
+        nom: Nom :

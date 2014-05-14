@@ -2,15 +2,74 @@ dahira_homepage:
     pattern: /
     defaults: { _controller: EdahiraDahiraBundle:Index:index }
 
+dahira_header:
+    pattern: /index/header
+    defaults: { _controller: EdahiraDahiraBundle:Index:header }
+
+dahira_home:
+    pattern: /index/home
+    defaults: { _controller: EdahiraDahiraBundle:Index:home }
+
+dahira_index:
+    pattern: dahira/index
+    defaults: { _controller: EdahiraDahiraBundle:Dahira:index}
+
+dahira_editer:
+    pattern: dahira/editer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Dahira:editer, id: null }
+    requirements:
+        page: \d+
+
+dahira_gerer:
+    pattern: dahira/gerer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Dahira:gerer, id: null }
+    requirements:
+        page: \d+
+
+dahira_supprimer:
+    pattern: dahira/supprimer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Dahira:supprimer, id: 1 }
+    requirements:
+        id: \d+
+
+dahira_partager:
+    pattern: dahira/partager/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Dahira:partager }
+    requirements:
+        id: \d+
+
+categorie_index:
+    pattern: categorie/index
+    defaults: { _controller: EdahiraDahiraBundle:Categorie:index }
+
+categorie_editer:
+    pattern: categorie/editer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Categorie:editer, id:null }
+    requirements:
+        id: \d+
+
+categorie_supprimer:
+    pattern: categorie/supprimer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Categorie:supprimer }
+    requirements:
+        id: \d+
+
 membre_editer:
     pattern: membre/editer/{id}
-    defaults: { _controller: EdahiraDahiraBundle:Membre:editer, id:null}
+    defaults: { _controller: EdahiraDahiraBundle:Membre:editer, id:null }
     requirements:
         id: \d+
 
 membre_afficher:
     pattern: membre/afficher
     defaults: { _controller: EdahiraDahiraBundle:Membre:afficher }
+
+membre_cotiser:
+    pattern: membre/cotiser/{membre}/{type}
+    defaults: { _controller: EdahiraDahiraBundle:Membre:cotiser }
+    requirements:
+        membre: \d+
+        type: \d+
 
 membre_index:
     pattern: membre/index/{page}
@@ -21,26 +80,6 @@ membre_index:
 membre_supprimer:
     pattern: membre/supprimer/{id}
     defaults: { _controller: EdahiraDahiraBundle:Membre:supprimer }
-    requirements:
-        page: \d+
-
-typecaisse_index:
-    pattern: typecaisse/index/{page}
-    defaults: { _controller: EdahiraDahiraBundle:Typecaisse:index,page:1 }
-
-typecaisse_editer:
-    pattern: typecaisse/editer/{id}
-    defaults: { _controller: EdahiraDahiraBundle:Typecaisse:editer, id:null}
-
-typecaisse_afficher:
-    pattern: typecaisse/afficher/{id}
-    defaults: { _controller: EdahiraDahiraBundle:Typecaisse:afficher }
-    requirements:
-        page: \d+
-
-typecaisse_supprimer:
-    pattern: typecaisse/supprimer/{id}
-    defaults: { _controller: EdahiraDahiraBundle:Typecaisse:supprimer }
     requirements:
         page: \d+
 
@@ -66,34 +105,34 @@ caisse_supprimer:
 
 caisse_changeretat:
     pattern: caisses/changeretat/{id}/{etat}
-    defaults: { _controller: EdahiraDahiraBundle:Caisses:changeretat}
+    defaults: { _controller: EdahiraDahiraBundle:Caisses:changeretat }
     requirements:
         page: \d+
         etat: 0|1
 
 typeevenement_index:
-    pattern: typeevenement/index/{page}
-    defaults: { _controller: EdahiraDahiraBundle:Typeevenement:index,page:1 }
+    pattern: typeevenement/index
+    defaults: { _controller: EdahiraDahiraBundle:Typeevenement:index }
 
 typeevenement_editer:
     pattern: typeevenement/editer/{id}
-    defaults: { _controller: EdahiraDahiraBundle:Typeevenement:editer, id:null}
+    defaults: { _controller: EdahiraDahiraBundle:Typeevenement:editer, id:null }
 
 typeevenement_afficher:
     pattern: typeevenement/details/{id}
     defaults: { _controller: EdahiraDahiraBundle:Typeevenement:details }
     requirements:
-        page: \d+
+        id: \d+
 
 typeevenement_supprimer:
     pattern: typeevenement/supprimer/{id}
     defaults: { _controller: EdahiraDahiraBundle:Typeevenement:supprimer }
     requirements:
-        page: \d+
+        id: \d+
 
 event_index:
-    pattern: evenement/index/{page}
-    defaults: { _controller: EdahiraDahiraBundle:Evenement:index, page:1 }
+    pattern: evenement/index
+    defaults: { _controller: EdahiraDahiraBundle:Evenement:index}
 
 event_editer:
     pattern: evenement/editer/{id}
@@ -133,11 +172,13 @@ etats_index:
     pattern: etats/index
     defaults: { _controller: EdahiraDahiraBundle:Etats:index }
 
+etats_caisse:
+    pattern: etats/caisse
+    defaults: { _controller: EdahiraDahiraBundle:Etats:caisse }
+
 etats_evenement:
-    pattern: etats/evenement/{id}
+    pattern: etats/evenement
     defaults: { _controller: EdahiraDahiraBundle:Etats:evenement }
-    requirements:
-        id: \d+
 
 etats_typeevenement:
     pattern: etats/typeevenement/{id}
@@ -146,7 +187,101 @@ etats_typeevenement:
         id: \d+
 
 etats_membre:
-    pattern: etats/membre/{id}/{type}/{page}
-    defaults: { _controller: EdahiraDahiraBundle:Etats:membre, page:1 }
+    pattern: etats/membre/{membre}/{type}
+    defaults: { _controller: EdahiraDahiraBundle:Etats:membre, membre:null,  type:null }
     requirements:
+        membre: \d+
+        type: \d+
+
+etats_charges:
+    pattern: etats/charges
+    defaults: { _controller: EdahiraDahiraBundle:Etats:charges, id:null }
+
+etats_chargemembre:
+    pattern: etats/chargemembre
+    defaults: { _controller: EdahiraDahiraBundle:Etats:chargemembre }
+    requirements:
+
+charges_index:
+    pattern: charges/index
+    defaults: { _controller: EdahiraDahiraBundle:Charges:index }
+
+charges_editer:
+    pattern: charges/editer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Charges:editer, id:null }
+    requirements:
+        id: \d+
+
+charges_changeretat:
+    pattern: charges/changeretat/{id}/{etat}
+    defaults: { _controller: EdahiraDahiraBundle:Charges:changeretat }
+    requirements:
+        page: \d+
+        etat: 0|1
+
+charges_details:
+    pattern: charges/details/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Charges:details }
+    requirements:
+        page: \d+
+
+charges_supprimer:
+    pattern: charges/supprimer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Charges:supprimer }
+    requirements:
+        page: \d+
+
+versement_index:
+    pattern: versement/index
+    defaults: { _controller: EdahiraDahiraBundle:Versement:index }
+
+versement_editer:
+    pattern: versement/editer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Versement:editer, id:null }
+    requirements:
+        id: \d+
+
+versement_supprimer:
+    pattern: versement/supprimer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Versement:supprimer }
+    requirements:
+        id: \d+
+
+depenses_index:
+    pattern: depenses/index
+    defaults: { _controller: EdahiraDahiraBundle:Depenses:index }
+
+depenses_editer:
+    pattern: depenses/editer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Depenses:editer,id: null }
+    requirements:
+        id: \d+
+
+depenses_supprimer:
+    pattern: depenses/supprimer/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Depenses:supprimer }
+    requirements:
+        id: \d+
+
+don_index:
+    pattern: don/index/{type}/{idType}
+    defaults: { _controller: EdahiraDahiraBundle:Don:index }
+    requirements:
+        type: 1|2
+        idType: \d+
+
+don_editer:
+    pattern: don/editer/{type}/{idType}/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Don:editer,id: null }
+    requirements:
+        type: 1|2
+        idType: \d+
+        id: \d+
+
+don_supprimer:
+    pattern: don/supprimer/{type}/{idType}/{id}
+    defaults: { _controller: EdahiraDahiraBundle:Don:supprimer,id: null  }
+    requirements:
+        type: 1|2
+        idType: \d+
         id: \d+

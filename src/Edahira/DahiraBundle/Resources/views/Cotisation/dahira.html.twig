@@ -1,4 +1,7 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <style>
@@ -14,10 +17,12 @@
     </style>
 {% endblock %}
 
-{% block title %}EdahiraDahiraBundle:Cotisation:dahira{% endblock %}
+{% block title %}{{ parent()}} | {{'label.cotisation' | lower | trans }}{% endblock %}
+
 {% block body_header %}
-	<h1>{{ 'titre.page.cotisation.dahira' | trans}}</h1>
+	<h1>{{ 'text.cotisation' | trans({'%type%': type.nom}) }}</h1>
 {% endblock %}
+
 {% block body_content %}
 
    Cotisation 

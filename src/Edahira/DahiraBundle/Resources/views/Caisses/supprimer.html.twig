@@ -1,7 +1,21 @@
-{% extends "::base.html.twig" %}
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
 
-{% block title %}EdahiraDahiraBundle:Caisses:supprimer{% endblock %}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
 
-{% block body %}
-<h1>Welcome to the Caisses:supprimer page</h1>
+{% block title %}{{ parent()}} | {{'label.caisse' | lower | trans }}{% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'text.fem.suppression' | trans({'%objet%': 'caisse: '~caisse.nom}) }}</h1>
+{% endblock %}
+
+{% block body_content %}
+	{{ parent() }}
+	<form class="form-horizontal" action="{{ path('caisse_supprimer',{'id': caisse.id}) }}" method="post" >
+		<fieldset>
+	        <div class="form-actions">
+				<input type="submit" class="btn btn-success btn-large" value={{ 'label.supprimer'| trans}} />
+				<a class="btn" href="{{ path('caisse_index') }}">{{ 'label.annuler'| trans}}</a>
+			</div>
+		</fieldset>
+	</form>
 {% endblock %}

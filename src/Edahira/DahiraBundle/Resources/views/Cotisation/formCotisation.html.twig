@@ -1,4 +1,6 @@
-<form class="form-horizontal" action="{{ path('cotisation_editer',{'id': id}) }}" method="post" {{ form_enctype(form) }}>
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+<form class="form-horizontal" action="{{ path('cotisation_editer',{'id': event.id}) }}" method="post" {{ form_enctype(form) }}>
 	{{ form_errors(form) }}
 	<fieldset>
 
@@ -7,7 +9,7 @@
 
         <div class="form-actions">
 			<input type="submit" class="btn btn-success btn-large" value={{ 'label.enregistrer'| trans}} />
-			<a class="btn" href="{{ path('event_index',{'id':id}) }}">{{ 'label.annuler'| trans}}</a>
+			<a class="btn" href="{{ path(app.session.get('last_route'),{'id': event.id}) }}">{{ 'label.annuler'| trans}}</a>
 		</div>
 	</fieldset>
 </form>

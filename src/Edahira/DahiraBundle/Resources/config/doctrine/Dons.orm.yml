@@ -1,0 +1,31 @@
+Edahira\DahiraBundle\Entity\Dons:
+    type: entity
+    table: null
+    repositoryClass: Edahira\DahiraBundle\Entity\DonsRepository
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        date:
+            type: date
+        donnateur:
+            type: string
+            length: '100'
+        montant:
+            type: string
+            length: '100'
+    manyToOne:
+        evenement:
+            targetEntity: Evenement
+            inversedBy: dons
+            joinColumn:
+                nullable: true
+        charges:
+            targetEntity: Charges
+            inversedBy: dons
+            joinColumn:
+                nullable: true
+    lifecycleCallbacks: {  }

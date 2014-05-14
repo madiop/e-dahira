@@ -1,0 +1,34 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+
+	<style>
+		#edahira_dahirabundle_versements_date select{
+		    width:73px
+		}
+	</style>
+{% endblock %}
+
+{% block title %}{{ parent() }} | {{'label.versement' | lower | trans }}{% endblock %}
+
+{% block body_header %}
+	
+	{% if versement.id %}
+		<h1>{{ 'text.modification' | trans({'%objet%': 'versement'}) }}</h1>
+	{% else %}
+		<h1>{{ 'text.nouveau' | trans({'%objet%': 'versement'}) }}</h1>
+	{% endif %}
+
+{% endblock %}
+
+{% block body_content%}
+    {{ parent() }}
+    
+	{% if form is defined %}
+        {% include "EdahiraDahiraBundle:Versement:formVersement.html.twig" %}
+    {% endif %}
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent()}} | {{'label.dahira' | lower | trans }}{% endblock %}
+
+
+{% block content %}
+	{% block body_content %}
+		{{ parent() }}
+	{% endblock %}
+
+	<div class="page-header">
+		<h1>{{ 'text.suppression' | trans({'%objet%': 'dahira: '~dahira.nom}) }}</h1>
+	</div>
+
+	<form class="form-horizontal" action="{{ path('dahira_supprimer',{'id': dahira.id}) }}" method="post" >
+		<fieldset>
+	        <div class="form-actions">
+				<input type="submit" class="btn btn-success btn-large" value={{ 'label.supprimer'| trans}} />
+				<a class="btn" href="{{ path('dahira_index') }}">{{ 'label.annuler'| trans}}</a>
+			</div>
+		</fieldset>
+	</form>
+{% endblock %}

@@ -16,16 +16,18 @@ class CotisationsType extends AbstractType
     {
         $builder
         //    ->add('date'     ,'date')
-        //    ->add('montant'  ,'text')
-            ->add('evenement','entity', array('class'    => 'EdahiraDahiraBundle:Evenement',
-                                                    'property' => 'id',
-                                                    'multiple' => false,
-                                                    'expanded' => false))
-            ->add('membre'   ,'entity', array('class'    => 'EdahiraDahiraBundle:Membres',
-                                                    'property' => 'affichage',
-                                                    'multiple' => false,
-                                                    'expanded' => false))
-            ->add('etat'     ,'checkbox')
+        //    ->add('montant'  ,'text'), array('label' => 'form.label.prenom', 'translation_domain' => 'EdahiraDahiraBundle')
+            ->add('evenement','entity', array('label'    => 'form.label.evenement', 'translation_domain' => 'EdahiraDahiraBundle',
+                                              'class'    => 'EdahiraDahiraBundle:Evenement',
+                                              'property' => 'id',
+                                              'multiple' => false,
+                                              'expanded' => false))
+            ->add('membre'   ,'entity', array('label'    => 'form.label.membre', 'translation_domain' => 'EdahiraDahiraBundle',
+                                              'class'    => 'EdahiraDahiraBundle:Membres',
+                                              'property' => 'affichage',
+                                              'multiple' => false,
+                                              'expanded' => false))
+            ->add('etat'     ,'checkbox', array('label' => 'form.label.etat', 'translation_domain' => 'EdahiraDahiraBundle'))
         ;
     }
     

@@ -13,7 +13,7 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class TypeevenementRepository extends EntityRepository
 {
-	public function getTypeevenements($nombreParPage, $page){
+	public function getTypeevenemets($nombreParPage, $page){
 		$qb = $this->createQueryBuilder('t')
 				   ->getQuery();
 				   
@@ -21,5 +21,25 @@ class TypeevenementRepository extends EntityRepository
            ->setMaxResults($nombreParPage);
            
 		return new Paginator($qb);
+	}
+
+	public function getTypes($dahira){
+		$qb = $this->createQueryBuilder('t')
+                ->leftJoin('t.dahira', 'd')
+                ->addSelect('d')
+                ->where("d.id = :dahira")
+                ->setParameter('dahira', $dahira);
+                // ->getQuery();
+
+	    return $qb;//->getResult();//
+	}
+
+	public function findLast(){
+		$qb = $this->createQueryBuilder('t')
+		           ->orderBy('t.id', 'DESC')
+                   ->setMaxResults(1)
+                   ->getQuery()
+                   ->getSingleResult();
+        return $qb;
 	}
 }

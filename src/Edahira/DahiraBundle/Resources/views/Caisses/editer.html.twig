@@ -1,4 +1,7 @@
 {% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
 {% block stylesheets %}
     {{ parent() }}
     <style>
@@ -8,11 +11,19 @@
     </style>
 {% endblock %}
 
-{% block title %}EdahiraDahiraBundle:Caisse:editer{% endblock %}
+{% block title %}{{ parent()}} | {{'label.caisse' | lower | trans }}{% endblock %}
 
 {% block body_header %}
-	<h1>{{ 'type.form.titre' | trans}}</h1>
+
+	{% if caisse.id %}
+		<h1>{{ 'text.modification' | trans({'%objet%': 'caisse'}) }}</h1>
+	{% else %}
+		<h1>{{ 'text.nouvelle' | trans({'%objet%': 'caisse'}) }}</h1>
+	{% endif %}
+
 {% endblock %}
+
 {% block body_content%}
+	{{ parent() }}
 	{% include "EdahiraDahiraBundle:Caisses:formCaisse.html.twig" %}
 {% endblock %}

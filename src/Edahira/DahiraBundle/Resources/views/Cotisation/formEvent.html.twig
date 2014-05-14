@@ -1,3 +1,5 @@
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
 <div class="row-fluid">
 	<form class="form-horizontal" action="{{ path('event_editer') }}" method="post" {{ form_enctype(formEvent) }}>
 		{{ form_errors(formEvent) }}

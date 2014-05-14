@@ -1,12 +1,56 @@
-<form class="form-horizontal" action="{{ path('typeevenement_editer',{'id': id}) }}" method="post" {{ form_enctype(form) }}>
-	{{ form_errors(form) }}
-	<fieldset>
-		
-		 {{ form_widget(form) }}
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+<form class="form-horizontal" action="{{ path('typeevenement_editer',{'id': type.id}) }}" method="post" {{ form_enctype(form) }}>
+    {{ form_errors(form) }}
+    <fieldset>
+        
+        <div class="control-group">
+            <label class="control-label" for="membre">{{ form_label(form.nom) }}</label>
+            <div class="controls">
+                {{ form_widget(form.nom) }}
+                {{ form_errors(form.nom) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="membre">{{ form_label(form.periode) }}</label>
+            <div class="controls">
+                {{ form_widget(form.periode) }}
+                {{ form_errors(form.periode) }}
+            </div>
+        </div>
+        <div class="control-group">
+            <label class="control-label" for="membre">{{ form_label(form.caisse) }}</label>
+            <div class="controls">
+                {{ form_widget(form.caisse) }}
+                {{ form_errors(form.caisse) }}
+            </div>
+        </div>
+
+    {% for cotisation in form.cotisations %}
+        <div class="control-group">
+            <label class="control-label" for="membre">{{ form_label(form.cotisations) }}</label>
+            <div class="controls">
+                {{ form_widget(cotisation.categorie) }}
+                {{ form_errors(cotisation.categorie) }}
+                {{ form_widget(cotisation.montant) }}
+                {{ form_errors(cotisation.montant) }}
+            </div>
+        </div>
+        
+    {% endfor %}
+
+        <div class="control-group">
+            <label class="control-label" for="membre">{{ form_label(form.jourdesemaine) }}</label>
+            <div class="controls">
+                {{ form_widget(form.jourdesemaine) }}
+                {{ form_errors(form.jourdesemaine) }}
+            </div>
+        </div>
+        {{ form_rest(form) }} 
 
         <div class="form-actions">
-			<input type="submit" class="btn btn-success btn-large" value={{ 'label.enregistrer'| trans}} />
-			<a class="btn" href="{{ path('event_index') }}">{{ 'label.annuler'| trans}}</a>
-		</div>
-	</fieldset>
+            <input type="submit" class="btn btn-success btn-large" value={{ 'label.enregistrer'| trans}} />
+            <a class="btn" href="{{ path(app.session.get('last_route')) }}">{{ 'label.annuler'| trans}}</a>
+        </div>
+    </fieldset>
 </form>

@@ -15,14 +15,10 @@ class CaissesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('nom',        'text')
-            ->add('cotisation', 'text')
-            ->add('typeCaisse', 'entity', array('class'    => 'EdahiraDahiraBundle:Typecaisses',
-                                                    'property' => 'nom',
-                                                    'multiple' => false,
-                                                    'expanded' => false))
-            ->add('jour',       'date')
-            ->add('etat',       'checkbox')
+            ->add('nom',         'text', array('label' => 'form.label.nom', 'translation_domain' => 'EdahiraDahiraBundle')) 
+            ->add('description', 'textarea', array('required' => false, 'label' => 'form.label.description', 'translation_domain' => 'EdahiraDahiraBundle'))
+            ->add('fond',         'integer', array('required' => false, 'label' => 'form.label.fond', 'translation_domain' => 'EdahiraDahiraBundle'))
+            ->add('etat',        'checkbox', array('required' => false, 'label' => 'form.label.etat', 'translation_domain' => 'EdahiraDahiraBundle'))
         ;
     }
     

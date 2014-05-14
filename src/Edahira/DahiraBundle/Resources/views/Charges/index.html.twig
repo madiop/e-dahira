@@ -1,0 +1,60 @@
+{% extends "EdahiraDahiraBundle::layout.html.twig" %}
+
+{% trans_default_domain 'EdahiraDahiraBundle' %}
+
+{% block title %}{{ parent() }} | {{ 'label.charges' | trans }} {% endblock %}
+
+{% block body_header %}
+	<h1>{{ 'text.list' | trans({'%objet%': 'charges'}) }}</h1>
+{% endblock %}
+
+{% block body_content %}
+	{{ parent() }}
+	
+	{% if charges | length > 0 %}
+		<table class="table table-striped table-bordered table-condensed">
+			<thead>
+				<tr>
+					<th>{{ 'label.nom'| trans }}</th>
+					<th>{{ 'label.echeance'| trans }}</th>
+					<th>{{ 'label.caisse'| trans }}</th>
+					<th>{{ 'label.etat'| trans }}</th>
+					<th>{{ 'label.actions'| trans }}</th>
+				</tr>
+			</thead>
+			<tbody>
+			{% for charge in charges %}
+				<tr class="list-users">
+					<td>{{ charge.objet }}</td>
+					<td>{{ charge.echeance | date('d-m-Y') }}</td>
+					<td>{{ charge.caisse.nom }}</td>
+					{% if charge.etat == true %}
+						<td><span class="label label-success">{{ 'label.ouvert' | trans}}</span></td>
+					{% else %}
+						<td><span class="label label-important">{{ 'label.ferme' | trans}}</span></td>
+					{% endif %}
+					<td>
+						<div class="btn-group">
+							<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">{{ 'label.actions'| trans }} <span class="caret"></span></a>
+							<ul class="dropdown-menu">
+								<li><a href="{{ path('charges_details', {'id': charge.id}) }}"><i class="icon-align-left"></i> {{ 'action.detailscotis' |trans }}</a></li>
+								<li><a href="{{ path('charges_editer', {'id': charge.id}) }}"><i class="icon-pencil"></i> {{ 'action.edit' |trans }}</a></li>
+								<li><a href="{{ path('charges_supprimer', {'id': charge.id}) }}"><i class="icon-trash"></i> {{ 'action.delete' |trans }}</a></li>
+                            {% if charge.etat == true %}
+								<li><a href="{{ path('charges_changeretat', {'id': charge.id, etat: 0}) }}"><i class="icon-folder-close"></i> {{ 'label.fermer' | trans}}</a></li>
+							{% else %}
+							    <li><a href="{{ path('charges_changeretat', {'id': charge.id, etat: 1}) }}"><i class="icon-folder-open"></i> {{ 'label.ouvrir' | trans}}</a></li>
+							{% endif %}
+							</ul>
+						</div>
+					</td>
+				</tr>
+			{% endfor %}
+			</tbody>
+		</table>
+		{% else %}
+			<p>{{ 'text.fem.aucun' | trans({'%objet%': 'charge'}) }}</p>
+		{% endif %}
+	<a href="{{ path('charges_editer') }}" class="btn btn-success">{{ 'label.ajouter' | trans }}</a>
+
+{% endblock %}

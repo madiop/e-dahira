@@ -13,32 +13,32 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class MembresRepository extends EntityRepository
 {
-	public function getMembres($nombreParPage, $page){
+	public function getMembres($dahira){
 		$qb = $this->createQueryBuilder('m')
-				   ->getQuery();
-				   
-		$qb->setFirstResult(($page-1) * $nombreParPage)
-           ->setMaxResults($nombreParPage);
-           
-		return new Paginator($qb);
+                ->leftJoin('m.dahira', 'd')
+                ->addSelect('d')
+                ->where("d.id = :dahira")
+                ->andWhere("m.etat = :etat")
+				->orderBy('m.prenom', 'ASC')
+                ->setParameter('etat', 1)
+                ->setParameter('dahira', $dahira);
+                // ->getQuery();
+
+	    return $qb;//->getResult();//
 	}
 
-	public function getCotisationsMembreEventType($type, $nombreParPage, $page){
+	public function getCotisationsMembreEventType($membre, $type){
 		$qb = $this->createQueryBuilder('m')
 		           ->rightJoin('m.cotisations','c')
 				   ->addSelect('c')
-		           ->rightJoin('c.evenement','c')
+		           ->rightJoin('c.evenement','e')
 				   ->addSelect('c')
 		           ->rightJoin('c.typeevenement','t')
 				   ->addSelect('t')
-				   ->where('t.id = '.$type)
-				   // ->orderBy('c.date', 'DESC')
+				   ->where('t.id = ?', $type)
+				   ->andWhere('m.id = ?', $membre)
 				   ->getQuery();
 				   
-		$qb->setFirstResult(($page-1) * $nombreParPage)
-           ->setMaxResults($nombreParPage);
-           
-		return new Paginator($qb);
+		return $qb->getResult();
 	}
-	
 }
