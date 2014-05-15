@@ -25,16 +25,12 @@ class TypeevenementController extends Controller
 
         if(count($user->getActiveDahira()->getCaisses()) < 1){
 
-            $url = $this->generateUrl("caisse_editer");
-            $this->get('session')->getFlashBag()->add('html','action.caisse.create');
-            $this->get('session')->getFlashBag()->add('url',$url);
+            $this->get('session')->getFlashBag()->add('info','action.caisse.create');
             return $this->render('EdahiraDahiraBundle:Typeevenement:editer.html.twig');
         }
         elseif (count($user->getActiveDahira()->getCategories()) < 1) {
 
-            $url = $this->generateUrl("categorie_editer");
-            $this->get('session')->getFlashBag()->add('html','action.categorie.create');
-            $this->get('session')->getFlashBag()->add('url',$url);
+            $this->get('session')->getFlashBag()->add('info','action.categorie.create');
             return $this->render('EdahiraDahiraBundle:Typeevenement:editer.html.twig');
         }
 
@@ -57,7 +53,8 @@ class TypeevenementController extends Controller
 
         if($request->getMethod() == 'POST'){
             $form->bind($request);
-                
+            $new = false;
+
             if($form->isValid()){
                 $em = $this->getDoctrine()
                            ->getManager();
@@ -67,8 +64,11 @@ class TypeevenementController extends Controller
                     $newId = $this->getDoctrine()
                                    ->getManager()
                                    ->getRepository('EdahiraDahiraBundle:Typeevenement')
-                                   ->findLast()->getId()+1;
+                                   ->findLast()+1;
+
+                    $new = true;
                     $type->setId($newId);
+
                 }
 
                 foreach ($user->getActiveDahira()->getTypeevenement() as $typeVerif) {
@@ -87,11 +87,18 @@ class TypeevenementController extends Controller
                 foreach ($type->getCotisations() as $key => $montantCot) {
                     $montantCot->setTypeevenement($type);
                 }
+
+                if($new){
+                    $this->get('session')->getFlashBag()->add('success','flash.type.added');
+                }
+                else{
+                    $this->get('session')->getFlashBag()->add('success','flash.type.edited');
+                }
                  
                 $em->persist($type);
                 $em->flush();
 
-                $this->get('session')->getFlashBag()->add('success','flash.type.edited');
+                
                 return $this->redirect($this->generateUrl('typeevenement_index'));
             }
         }
@@ -106,6 +113,15 @@ class TypeevenementController extends Controller
     {
         if($this->get('request')->getMethod() == 'POST'){
             $em = $this->getDoctrine()->getManager();
+
+            foreach ($type->getCotisations() as $cotis) {
+                $em->remove($cotis);
+            }
+
+            foreach ($type->getEvenement() as $event) {
+                $em->remove($event);
+            }
+
             $em->remove($type);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.type.deleted');

@@ -26,15 +26,13 @@ class ChargesController extends Controller
     	if(count($user->getActiveDahira()->getCaisses()) < 1){
 
             $url = $this->generateUrl("caisse_editer");
-            $this->get('session')->getFlashBag()->add('html','action.caisse.create');
-            $this->get('session')->getFlashBag()->add('url',$url);
+            $this->get('session')->getFlashBag()->add('info','action.caisse.create');
             return $this->render('EdahiraDahiraBundle:Charges:editer.html.twig');
         }
         elseif (count($user->getActiveDahira()->getCategories()) < 1) {
 
             $url = $this->generateUrl("categorie_editer");
-            $this->get('session')->getFlashBag()->add('html','action.categorie.create');
-            $this->get('session')->getFlashBag()->add('url',$url);
+            $this->get('session')->getFlashBag()->add('info','action.categorie.create');
             return $this->render('EdahiraDahiraBundle:Charges:editer.html.twig');
         }
 
@@ -69,16 +67,18 @@ class ChargesController extends Controller
 
 		if($request->getMethod() == 'POST'){
 			$form->bind($request);
-				
+			$new = false;
+
 			if($form->isValid()){
 				$em = $this->getDoctrine()
 				           ->getManager();
 				if(is_null($charge->getId())){
+					$new = true;
 
 					$newId = $this->getDoctrine()
 							       ->getManager()
 				     		       ->getRepository('EdahiraDahiraBundle:Charges')
-					    	       ->findLast()->getId()+1;
+					    	       ->findLast()+1;
 
 	                $charge->setId($newId);
 	            }
@@ -98,7 +98,7 @@ class ChargesController extends Controller
 				}
 
 				$em->persist($charge);
-				if(is_null($charge->getId())){
+				if($new){
 					$em->flush();
 					$this->get('session')->getFlashBag()->add('success','flash.charge.added');
 				}
@@ -157,7 +157,7 @@ class ChargesController extends Controller
 
 			$em->remove($charge);
 			$em->flush();
-			$this->get('session')->getFlashBag()->add('info', 'flash.charge.supprimer');
+			$this->get('session')->getFlashBag()->add('success', 'flash.charge.supprimer');
 			
 			return $this->redirect($this->generateUrl('charges_index'));
 		}

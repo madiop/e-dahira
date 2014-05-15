@@ -10,20 +10,22 @@
                     <li class="nav-header"><i class="icon-wrench"></i> {{'label.administration' | trans | capitalize}}</li>
                     <li><a href="{{ path('dahira_index') }}">{{'label.dahira' | trans | capitalize}}</a></li>
                     <li><a href="{{ path('caisse_index') }}">{{'label.caisse' | trans | capitalize}}</a></li>
-                    <li><a href="{{ path('typeevenement_index') }}">{{'label.typeevenement' | trans | capitalize}}</a></li>
                     <li><a href="{{ path('categorie_index') }}">{{'label.categorie' | trans | capitalize}}</a></li>
+                    <li><a href="{{ path('typeevenement_index') }}">{{'label.typeevenement' | trans | capitalize}}</a></li>
                     <li><a href="{{ path('membre_index') }}">{{'label.membre' | trans | capitalize}}</a></li>
-                    <li class="nav-header"><i class="icon-gift"></i> {{'label.events' | trans | capitalize}}</li>
+                    
+                    <li class="nav-header"><i class="icon-gift"></i> {{'label.gestion' | trans | capitalize}}</li>
                     <li><a href="{{ path('event_index') }}">{{'label.evenement' | trans | capitalize}}</a></li>
                     <li><a href="{{ path('depenses_index') }}">{{'label.depenses' | trans | capitalize}}</a></li>
                     <li><a href="{{ path('charges_index') }}">{{'label.charges' | trans | capitalize}}</a></li>
                     <li><a href="{{ path('versement_index') }}">{{'label.versement' | trans | capitalize}}</a></li>
-                    <li class="nav-header"><i class="icon-signal"></i> {{'label.gestion' | trans | capitalize}}</li>
-                    <li><a href="{{ path('etats_caisse') }}">{{'label.etat.caisse' | trans | capitalize}}</a></li>
-                    <li><a href="{{ path('etats_evenement') }}">{{'label.etat.type' | trans | capitalize}}</a></li>
-                    <li><a href="{{ path('etats_membre') }}">{{'label.etat.type.membre' | trans | capitalize}}</a></li>
-                    <li><a href="{{ path('etats_charges') }}">{{'label.etat.charge' | trans | capitalize}}</a></li>
-                     <li><a href="{{ path('etats_chargemembre') }}">{{'label.etat.versementmembre' | trans | capitalize}}</a></li>
+                    
+                    <li class="nav-header"><i class="icon-signal"></i> {{'label.etats' | trans | capitalize}}</li>
+                    <li><a href="{{ path('etats_caisse') }}">{{'label.caisse' | trans | capitalize}}</a></li>
+                    <li><a href="{{ path('etats_evenement') }}">{{'label.type' | trans | capitalize}}</a></li>
+                    <li><a href="{{ path('etats_membre') }}">{{'label.type' | trans | capitalize}} - {{'label.membre' | trans | capitalize}}</a></li>
+                    <li><a href="{{ path('etats_charges') }}">{{'label.charge' | trans | capitalize}}</a></li>
+                     <li><a href="{{ path('etats_chargemembre') }}">{{'label.versementmembre' | trans | capitalize}}</a></li>
                 {% endblock %}
             </ul>
         </div>
@@ -36,7 +38,25 @@
                     {% endblock %}
                 </div>
                 {% block body_content %}
-                    {% autoescape 'html' %}
+
+                        {% for key, message in app.session.flashbag.all() %}
+                            <div class="alert alert-{{ key }}">
+                                {% for msg in message %}
+                                    {{ msg | trans }}
+                                {% endfor %} 
+                            </div>
+                        {% endfor %}
+                        
+
+                        {#
+
+                        {% for message in app.session.flashbag.get('html') %}
+                          {{ dump(message) }}
+                            {% for url in app.session.flashbag.get('url') %}
+                                <p><span class="alert alert-info"><a href="{{ url }}">{{ message | trans }}</a></span></p>
+                            {% endfor %}
+                        {% endfor %}
+
                         {% for message in app.session.flashbag.get('info') %}
                             <p><span class="label label-info">{{ message | trans }}</span></p>
                         {% endfor %}
@@ -49,13 +69,8 @@
                         {% for message in app.session.flashbag.get('warning') %}
                             <p><span class="label label-warning">{{ message | trans }}</span></p>
                         {% endfor %}
-                        {% for message in app.session.flashbag.get('html') %}
-                            {% for url in app.session.flashbag.get('url') %}
-                                <p><span class="alert alert-info"><a href="{{ url }}">{{ message | trans }}</a></span></p>
-                            {% endfor %}
-                        {% endfor %}
-
-                    {% endautoescape %}
+                        
+                        #}
                 {% endblock %}
             {% endblock %}
         </div>

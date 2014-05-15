@@ -14,7 +14,7 @@
 {% block title %}{{ parent()}} | {{'label.evenement' | lower | trans }}{% endblock %}
 
 {% block body_header %}
-	{% if evenement.id %}
+	{% if evenement.id is defined %}
 		<h1>{{ 'text.modification' | trans({'%objet%': 'évènement'}) }}</h1>
 	{% else %}
 		<h1>{{ 'text.nouvel' | trans({'%objet%': 'évènement'}) }}</h1>

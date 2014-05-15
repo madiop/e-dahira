@@ -1,9 +1,8 @@
-# This file is auto-generated during the composer install
 parameters:
     database_driver: pdo_mysql
     database_host: 127.0.0.1
     database_port: null
-    database_name: e-dahira
+    database_name: e-dahira_db
     database_user: root
     database_password: mlaz
     mailer_transport: smtp
@@ -12,3 +11,4 @@ parameters:
     mailer_password: null
     locale: fr
     secret: 4a93c13c3d2afb8ed1b2fb64a7f2cfe6c67088e4
+    database_path: null

@@ -409,6 +409,11 @@ class appDevUrlMatcher extends Symfony\Bundle\FrameworkBundle\Routing\Redirectab
             return $this->mergeDefaults(array_replace($matches, array('_route' => 'don_supprimer')), array (  '_controller' => 'Edahira\\DahiraBundle\\Controller\\DonController::supprimerAction',  'id' => NULL,));
         }
 
+        // don_details
+        if (preg_match('#^/(?P<_locale>en|fr)/dahira/don/details/(?P<type>1|2)/(?P<idType>\\d+)$#s', $pathinfo, $matches)) {
+            return $this->mergeDefaults(array_replace($matches, array('_route' => 'don_details')), array (  '_controller' => 'Edahira\\DahiraBundle\\Controller\\DonController::supprimerAction',));
+        }
+
         if (0 === strpos($pathinfo, '/log')) {
             if (0 === strpos($pathinfo, '/login')) {
                 // fos_user_security_login

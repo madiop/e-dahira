@@ -39,7 +39,7 @@ class CategorieController extends Controller
 
 					if($categorieVerif->getNom() == $categorie->getNom() and $categorieVerif->getId() != $categorie->getId()){
 						
-						$this->get('session')->getFlashBag()->add('warning','warning.categorie.existe');
+						$this->get('session')->getFlashBag()->add('warning','flash.categorie.existe');
 						
 						return $this->render('EdahiraDahiraBundle:Categorie:editer.html.twig', array(
 							'form'=>$form->createView(),
@@ -52,7 +52,7 @@ class CategorieController extends Controller
 				           ->getManager();
 
 				$em->persist($categorie);
-				if(is_null($categorie)){
+				if(is_null($categorie->getId())){
 					$em->flush();
 					$this->get('session')->getFlashBag()->add('success','flash.categorie.added');
 				}
@@ -81,7 +81,7 @@ class CategorieController extends Controller
 			$em->remove($categorie);
 			$em->flush();
 
-			$this->get('session')->getFlashBag()->add('success', 'info.categorie.deleted');
+			$this->get('session')->getFlashBag()->add('success', 'flash.categorie.deleted');
 			
 			return $this->redirect($this->generateUrl('categorie_index'));
 		}

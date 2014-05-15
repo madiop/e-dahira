@@ -15,7 +15,7 @@
 
 {% block body_header %}
 	
-	{% if depense.id %}
+	{% if depense.id is defined %}
 		<h1>{{ 'text.modification' | trans({'%objet%': 'depense'}) }}</h1>
 	{% else %}
 		<h1>{{ 'text.nouvelle' | trans({'%objet%': 'depense'}) }}</h1>

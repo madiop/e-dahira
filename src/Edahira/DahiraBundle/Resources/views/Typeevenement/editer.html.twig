@@ -6,7 +6,7 @@
 
 {% block body_header %}
 
-	{% if type.id %}
+	{% if type.id is defined %}
 		<h1>{{ 'text.modification' | trans({'%objet%': 'type d\'évènement'}) }}</h1>
 	{% else %}
 		<h1>{{ 'text.nouveau' | trans({'%objet%': 'type d\'évènement'}) }}</h1>

@@ -22,9 +22,7 @@ class EvenementController extends Controller
     	$user = $this->get('security.context')->getToken()->getUser();
 
     	if(count($user->getActiveDahira()->getTypeevenement()) < 1){
-    		$url = $this->generateUrl("typeevenement_editer");
-			$this->get('session')->getFlashBag()->add('html','action.type.create');
-            $this->get('session')->getFlashBag()->add('url',$url);
+			$this->get('session')->getFlashBag()->add('info','action.type.create');
 			return $this->render('EdahiraDahiraBundle:Evenement:editer.html.twig');
 		}
     	

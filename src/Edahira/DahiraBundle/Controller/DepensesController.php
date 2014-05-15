@@ -26,9 +26,7 @@ class DepensesController extends Controller
 
     	if(count($user->getActiveDahira()->getCaisses()) < 1){
 
-            $url = $this->generateUrl("caisse_editer");
-            $this->get('session')->getFlashBag()->add('html','action.caisse.create');
-            $this->get('session')->getFlashBag()->add('url',$url);
+            $this->get('session')->getFlashBag()->add('info','action.caisse.create');
             return $this->render('EdahiraDahiraBundle:Depenses:editer.html.twig');
         }
     	if(is_null($depense)){

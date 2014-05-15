@@ -53,9 +53,15 @@ class CaissesController extends Controller
 				           ->getManager();
 				 
 				$em->persist($caisse);
-				$em->flush();
+				if(is_null($caisse->getId())){
+					$em->flush();
+					$this->get('session')->getFlashBag()->add('success','success.caisse.added');
+				}
+				else{
+					$em->flush();
+					$this->get('session')->getFlashBag()->add('success','success.caisse.edeted');
+				}
 
-				$this->get('session')->getFlashBag()->add('success','success.caisse.edeted');
 				return $this->redirect($this->generateUrl('caisse_index'));
 			}
 		}
@@ -73,7 +79,7 @@ class CaissesController extends Controller
 	    	$em = $this->getDoctrine()->getManager();
 			$em->remove($caisse);
 			$em->flush();
-			$this->get('session')->getFlashBag()->add('success', 'action.caisse.deleted');
+			$this->get('session')->getFlashBag()->add('success', 'success.caisse.deleted');
 			
 			return $this->redirect($this->generateUrl('caisse_index'));
 		}

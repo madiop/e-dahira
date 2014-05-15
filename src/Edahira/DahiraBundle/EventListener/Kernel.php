@@ -60,8 +60,10 @@ class Kernel {
         $user = $this->container->get('security.context')->getToken()->getUser();
         // var_dump($user);
         if(is_object($user)){
-            if(is_null($user->getActiveDahira()) &&  !in_array($routeData, array('dahira_gerer', 'dahira_editer', 'dahira_supprimer', 'dahira_partager', 'fos_user_registration_confirmed', 'fos_user_security_login'))){
-
+            if(is_null($user->getActiveDahira()) &&  !in_array($routeData, array('dahira_gerer', 'dahira_editer', 'dahira_supprimer', 'dahira_partager', 'fos_user_registration_confirmed', 'fos_user_security_login', 'fos_user_registration_register'))){
+                
+                //Mettre une alert
+                // $session->getFlashBag()->add('info','action.dahira.choose');
                 $url = $this->router->generate('dahira_index');
                 $response = new RedirectResponse($url);
                 $response->send();

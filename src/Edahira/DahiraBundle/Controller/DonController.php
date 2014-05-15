@@ -29,7 +29,7 @@ class DonController extends Controller
 
         if($object->getDahira()->getId() != $dahira->getId()){
             // Alors l'objet n'appartien pas o dahira actif
-            $lastUrl = $this->get('session')->get('last_route')['name'];
+            $lastUrl = $this->get('session')->get('last_route');
             $this->get('session')->getFlashBag()->add('error', 'text.object.out!');
             return $this->redirect($this->generateUrl($lastUrl));
         }
@@ -76,7 +76,7 @@ class DonController extends Controller
 
         if($object->getDahira()->getId() != $dahira->getId()){
             // Alors l'objet n'appartien pas o dahira actif
-            $lastUrl = $this->get('session')->get('last_route')['name'];
+            $lastUrl = $this->get('session')->get('last_route');
             $this->get('session')->getFlashBag()->add('error', 'text.object.out!');
             return $this->redirect($this->generateUrl($lastUrl));
         }
@@ -95,6 +95,7 @@ class DonController extends Controller
                            ->getManager();
                 
                 $em->persist($don);
+
                 if(is_null($don->getId())){
                     $em->flush();
                     $this->get('session')->getFlashBag()->add('success','flash.don.add');
@@ -108,7 +109,7 @@ class DonController extends Controller
                     return $this->redirect($this->generateUrl('cotisation_etat', array('id' => $idType)));
                 }
                 else{
-                    return $this->redirect($this->generateUrl('charges_index', array('id' => $idType)));   
+                    return $this->redirect($this->generateUrl('charges_details', array('id' => $idType)));   
                 }
             }
         }
@@ -121,6 +122,28 @@ class DonController extends Controller
                 'type'   => $type
         ));
 
+    }
+
+    public function detailsAction($type, $idType)
+    {
+        if($type == 1){
+            $object = $this->getDoctrine()
+                               ->getManager()
+                               ->getRepository('EdahiraDahiraBundle:Evenement')
+                               ->find($idType);
+        }
+        elseif ($type == 2) {
+            $object = $this->getDoctrine()
+                               ->getManager()
+                               ->getRepository('EdahiraDahiraBundle:Charges')
+                               ->find($idType);
+        }
+
+        $dons = $object->getDons();
+
+        return $this->render('EdahiraDahiraBundle:Don:details.html.twig', array(
+                    'dons' => $dons
+                ));
     }
 
     public function supprimerAction($type, $idType, Dons $don = null)

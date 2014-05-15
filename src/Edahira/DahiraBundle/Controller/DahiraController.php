@@ -84,8 +84,7 @@ class DahiraController extends Controller
 				    $this->get('session')->getFlashBag()->add('success','flash.dahira.edited');
 				}
 								
-				$userManager->updateUser($user);
-				
+				$userManager->updateUser($user);				
 				
 				return $this->redirect($this->generateUrl('dahira_index'));
 			}
@@ -99,42 +98,66 @@ class DahiraController extends Controller
 
     public function supprimerAction(Dahira $dahira)
     {
+
     	if($this->get('request')->getMethod() == 'POST'){
 	    	$em = $this->getDoctrine()->getManager();
 
-	    	// Suppression des caisses
-	    	foreach ($dahira->getCaisses() as $caisse) {
-	    		$em->remove($caisse);
+	    	$nulResult = $this->getDoctrine()
+						   ->getManager()
+						   ->getRepository('EdahiraUserBundle:Utilisateurs')
+						   ->nullActiveDahira();
+			// var_dump($dahira);exit;
+
+	    	// Suppression des depenses
+	    	foreach ($dahira->getDepenses() as $depense) {
+	    		$em->remove($depense);
+	    	}
+
+	    	// Suppression des charges
+	    	foreach ($dahira->getCharges() as $charge) {
+	    		foreach ($charge->getMontants() as $montant) {
+	    			$em->remove($montant);
+	    		}
+	    		foreach ($charge->getDons() as $don) {
+	    			$em->remove($don);
+	    		}
+	    		foreach ($charge->getVersements() as $versement) {
+	    			$em->remove($versement);
+	    		}
+	    		$em->remove($charge);
+	    	}
+
+	    	// Suppression des evenements
+	    	foreach ($dahira->getEvenement() as $evenement) {
+	    		foreach ($evenement->getDons() as $don) {
+	    			$em->remove($don);
+	    		}
+	    		foreach ($evenement->getCotisations() as $cotisation) {
+	    			$em->remove($cotisation);
+	    		}
+	    		$em->remove($evenement);
+	    	}
+
+	    	// Suppression des typeevenement
+	    	foreach ($dahira->getTypeevenement() as $typeevenement) {
+	    		foreach ($typeevenement->getCotisations() as $cotisation) {
+	    			$em->remove($cotisation);
+	    		}
+	    		$em->remove($typeevenement);
+	    	}
+	    	// Suppression des membres
+	    	foreach ($dahira->getMembres() as $membre) {
+	    		$em->remove($membre);
 	    	}
 
 	    	// Suppression des categories
 	    	foreach ($dahira->getCategories() as $categorie) {
 	    		$em->remove($categorie);
 	    	}
-
-	    	// Suppression des charges
-	    	foreach ($dahira->getCharges() as $charge) {
-	    		$em->remove($charge);
-	    	}
-
-	    	// Suppression des evenements
-	    	foreach ($dahira->getEvenement() as $evenement) {
-	    		$em->remove($evenement);
-	    	}
-
-	    	// Suppression des membres
-	    	foreach ($dahira->getMembres() as $membre) {
-	    		$em->remove($membre);
-	    	}
-
-	    	// Suppression des typeevenement
-	    	foreach ($dahira->getTypeevenement() as $typeevenement) {
-	    		$em->remove($typeevenement);
-	    	}
-
-	    	// Suppression des depenses
-	    	foreach ($dahira->getDepenses() as $depense) {
-	    		$em->remove($depense);
+  
+	    	// Suppression des caisses
+	    	foreach ($dahira->getCaisses() as $caisse) {
+	    		$em->remove($caisse);
 	    	}
 
 			$em->remove($dahira);
@@ -168,7 +191,7 @@ class DahiraController extends Controller
         if($last_route == 'dahira_index')
         	return $this->redirect($this->generateUrl('dahira_homepage'));
 
-        return $this->redirect($this->generateUrl($last_route['name']));
+        return $this->redirect($this->generateUrl($last_route));
     }
 
     public function partagerAction(Dahira $dahira){
@@ -183,6 +206,11 @@ class DahiraController extends Controller
 				
 			if($form->isValid()){
 				$user = $form->getData()['utilisateur'];
+
+				if(is_null($user)){
+					$this->get('session')->getFlashBag()->add('info','action.user.choose');
+					return $this->redirect($this->generateUrl('dahira_partager', array('id'=>$dahira->getId())));
+				}
 
 				$dahira = $this->getDoctrine()
 						 ->getManager()

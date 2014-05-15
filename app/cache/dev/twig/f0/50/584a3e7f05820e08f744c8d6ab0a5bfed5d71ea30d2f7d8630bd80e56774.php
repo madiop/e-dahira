@@ -22,7 +22,7 @@ class __TwigTemplate_f050584a3e7f05820e08f744c8d6ab0a5bfed5d71ea30d2f7d8630bd80e
         echo $this->env->getExtension('routing')->getPath("fos_user_registration_register");
         echo "\" ";
         echo $this->env->getExtension('form')->renderer->searchAndRenderBlock((isset($context["form"]) ? $context["form"] : $this->getContext($context, "form")), 'enctype');
-        echo " method=\"POST\" class=\"form-horizontal well\">
+        echo " method=\"POST\" class=\"form-horizontal\">
 \t<div class=\"control-group\">
     \t<div class=\"controls\">
 \t   \t\t<span class=\"alert alert-info\"><a href=\"";
@@ -58,6 +58,6 @@ class __TwigTemplate_f050584a3e7f05820e08f744c8d6ab0a5bfed5d71ea30d2f7d8630bd80e
 
     public function getDebugInfo()
     {
-        return array (  43 => 11,  38 => 9,  30 => 6,  22 => 3,  19 => 2,  36 => 6,  34 => 5,  31 => 4,  28 => 3,);
+        return array (  38 => 9,  30 => 6,  22 => 3,  19 => 2,  214 => 72,  209 => 71,  206 => 70,  201 => 63,  198 => 62,  194 => 57,  191 => 56,  183 => 26,  172 => 47,  167 => 45,  159 => 40,  155 => 38,  148 => 33,  137 => 31,  133 => 30,  128 => 27,  126 => 26,  120 => 22,  118 => 21,  113 => 18,  110 => 17,  103 => 65,  101 => 62,  95 => 58,  93 => 56,  89 => 54,  86 => 17,  83 => 16,  74 => 9,  70 => 8,  65 => 7,  62 => 6,  56 => 5,  50 => 74,  45 => 69,  43 => 11,  37 => 6,  33 => 5,  27 => 1,  78 => 16,  75 => 15,  69 => 17,  67 => 15,  64 => 14,  57 => 12,  48 => 70,  44 => 9,  39 => 14,  35 => 7,  32 => 6,  29 => 5,  31 => 4,  28 => 3,);
     }
 }

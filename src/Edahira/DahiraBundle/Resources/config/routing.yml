@@ -280,8 +280,15 @@ don_editer:
 
 don_supprimer:
     pattern: don/supprimer/{type}/{idType}/{id}
-    defaults: { _controller: EdahiraDahiraBundle:Don:supprimer,id: null  }
+    defaults: { _controller: EdahiraDahiraBundle:Don:supprimer,id: null }
     requirements:
         type: 1|2
         idType: \d+
         id: \d+
+
+don_details:
+    pattern: don/details/{type}/{idType}
+    defaults: { _controller: EdahiraDahiraBundle:Don:supprimer }
+    requirements:
+        type: 1|2
+        idType: \d+

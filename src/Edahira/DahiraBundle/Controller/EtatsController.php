@@ -33,7 +33,7 @@ class EtatsController extends Controller
 
             $form->bind($request);
             $caisse = $form['caisse']->getData();
-                                                  
+
             return $this->render('EdahiraDahiraBundle:Etats:ajax.caisse.html.twig',array(
                 'caisse' => $caisse
             ));
@@ -55,10 +55,18 @@ class EtatsController extends Controller
            
             $type = $form['type']->getData();
 
-            $membres = $this->getDoctrine()
+            if(is_null($type)){
+                return $this->render('EdahiraDahiraBundle:Etats:ajax.evenement.html.twig',array(
+                    'events'       => null,
+                ));
+            }
+
+            /*$membres = $this->getDoctrine()
                             ->getManager()
                             ->getRepository('EdahiraDahiraBundle:Membres')
-                            ->findAll();
+                            ->findAll();*/
+
+            $menbres = $user->getActiveDahira->getMembres();
 
             $cotisations = array();
 
@@ -121,6 +129,13 @@ class EtatsController extends Controller
             $form->bind($request);
             $type = $form['type']->getData();
             $membre = $form['membre']->getData();
+
+            if(is_null($type) or is_null($membre)){
+                return $this->render('EdahiraDahiraBundle:Etats:ajax.membre.html.twig',array(
+                    'membre'      => $membre,
+                    'type'        => $type
+                ));
+            }
 
             $cotisations = $this->getDoctrine()
                                 ->getManager()
@@ -190,7 +205,14 @@ class EtatsController extends Controller
             $form->bind($request);
             $charge = $form->getData()['charge'];
             $membre = $form->getData()['membre'];
-           
+
+            if(is_null($charge) or is_null($membre)){
+                return $this->render('EdahiraDahiraBundle:Etats:ajax.chargemembre.html.twig',array(
+                    'charge'      => $charge,
+                    'membre'      => $membre
+                ));
+            }
+
             $versements = $this->getDoctrine()
                                ->getManager()
                                ->getRepository('EdahiraDahiraBundle:Versements')
@@ -202,8 +224,8 @@ class EtatsController extends Controller
 
             // var_dump($cotisations);exit;
             return $this->render('EdahiraDahiraBundle:Etats:ajax.chargemembre.html.twig',array(
-                'charge'     => $charge,
                 'versements' => $versements,
+                'charge'     => $charge,
                 'membre'     => $membre
             ));
         }

@@ -34,16 +34,12 @@ class VersementController extends Controller
 
         if(count($user->getActiveDahira()->getCharges()) < 1){
 
-            $url = $this->generateUrl("charges_editer");
-            $this->get('session')->getFlashBag()->add('html','action.charges.create');
-            $this->get('session')->getFlashBag()->add('url',$url);
+            $this->get('session')->getFlashBag()->add('info','action.charges.create');
             return $this->render('EdahiraDahiraBundle:Versement:editer.html.twig');
         }
         elseif (count($user->getActiveDahira()->getMembres()) < 1) {
 
-            $url = $this->generateUrl("membre_editer");
-            $this->get('session')->getFlashBag()->add('html','action.membre.create');
-            $this->get('session')->getFlashBag()->add('url',$url);
+            $this->get('session')->getFlashBag()->add('info','action.membre.create');
             return $this->render('EdahiraDahiraBundle:Versement:editer.html.twig');
         }
 

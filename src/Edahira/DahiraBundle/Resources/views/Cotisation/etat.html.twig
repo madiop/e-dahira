@@ -50,7 +50,8 @@
     {% else %}
         <p>{{ 'text.aucun' | trans({'%objet%': 'membre' }) }}</p>
     {% endif %}
-        <a href="{{ path('cotisation_editer', {'id': event.id}) }}" class="btn btn-success">{{ 'label.edit' | trans }}</a>
+        
+    <a href="{{ path('cotisation_editer', {'id': event.id}) }}" class="btn btn-success">{{ 'label.edit' | trans }}</a>
 
     <div class="page-header">
         <h1><small>{{ 'label.dons' | trans }}</small></h1>

@@ -43,7 +43,11 @@ class ChargesRepository extends EntityRepository
 		           ->orderBy('c.id', 'DESC')
                    ->setMaxResults(1)
                    ->getQuery()
-                   ->getSingleResult();
-        return $qb;
+                   ->getResult();
+
+        if(empty($qb))
+            return 0;
+        else
+            return $qb[0]->getId();
 	}
 }

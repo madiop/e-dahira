@@ -13,33 +13,37 @@ use Doctrine\ORM\Tools\Pagination\Paginator;
  */
 class TypeevenementRepository extends EntityRepository
 {
-	public function getTypeevenemets($nombreParPage, $page){
-		$qb = $this->createQueryBuilder('t')
-				   ->getQuery();
-				   
-		$qb->setFirstResult(($page-1) * $nombreParPage)
-           ->setMaxResults($nombreParPage);
-           
-		return new Paginator($qb);
-	}
+    public function getTypeevenemets($nombreParPage, $page){
+    	$qb = $this->createQueryBuilder('t')
+    			   ->getQuery();
 
-	public function getTypes($dahira){
-		$qb = $this->createQueryBuilder('t')
-                ->leftJoin('t.dahira', 'd')
-                ->addSelect('d')
-                ->where("d.id = :dahira")
-                ->setParameter('dahira', $dahira);
-                // ->getQuery();
+    	$qb->setFirstResult(($page-1) * $nombreParPage)
+             ->setMaxResults($nombreParPage);
+             
+    	return new Paginator($qb);
+    }
 
-	    return $qb;//->getResult();//
-	}
+    public function getTypes($dahira){
+    	$qb = $this->createQueryBuilder('t')
+                  ->leftJoin('t.dahira', 'd')
+                  ->addSelect('d')
+                  ->where("d.id = :dahira")
+                  ->setParameter('dahira', $dahira);
+                  // ->getQuery();
 
-	public function findLast(){
-		$qb = $this->createQueryBuilder('t')
-		           ->orderBy('t.id', 'DESC')
-                   ->setMaxResults(1)
-                   ->getQuery()
-                   ->getSingleResult();
-        return $qb;
-	}
+        return $qb;//->getResult();//
+    }
+
+    public function findLast(){
+    	$qb = $this->createQueryBuilder('t')
+    	           ->orderBy('t.id', 'DESC')
+                     ->setMaxResults(1)
+                     ->getQuery()
+                     ->getResult();
+                     // ->getSingleResult();
+          if(empty($qb))
+          	return 0;
+          else
+          	return $qb[0]->getId();
+    }
 }

@@ -17,8 +17,8 @@ class UtilisateursType extends BaseType
     {
 
         $builder
-            ->add('name',    'text', array('label' => 'form.label.nom', 'translation_domain' => 'EdahiraDahiraBundle'))
             ->add('surname', 'text', array('label' => 'form.label.prenom', 'translation_domain' => 'EdahiraDahiraBundle'))
+            ->add('name',    'text', array('label' => 'form.label.nom', 'translation_domain' => 'EdahiraDahiraBundle'))
         ;
         parent::buildForm($builder, $options);
     }

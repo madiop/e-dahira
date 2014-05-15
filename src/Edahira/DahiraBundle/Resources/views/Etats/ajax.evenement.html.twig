@@ -1,5 +1,7 @@
 {% trans_default_domain 'EdahiraDahiraBundle' %}
 
+{% if events is not null %}
+
 	{% if cotisations | length > 0 %}
 		<table class="table table-striped table-bordered table-condensed">
 			<thead align="center">
@@ -44,3 +46,7 @@
 	{% else %}
 		<p>{{ 'text.fem.aucun' | trans({'%objet%': 'cotisation'}) }}</p>
 	{% endif %}
+
+{% else %}
+    <span class='alert alert-info'>{{ 'action.type.choose' | trans }}</span>
+{% endif %}

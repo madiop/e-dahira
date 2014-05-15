@@ -16,7 +16,7 @@
 
 {% block body_header %}
 	
-	{% if versement.id %}
+	{% if versement.id is defined %}
 		<h1>{{ 'text.modification' | trans({'%objet%': 'versement'}) }}</h1>
 	{% else %}
 		<h1>{{ 'text.nouveau' | trans({'%objet%': 'versement'}) }}</h1>

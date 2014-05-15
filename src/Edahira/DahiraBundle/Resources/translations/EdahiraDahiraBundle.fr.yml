@@ -52,6 +52,7 @@ label:
     administration: Administration
     dahira: Dahira
     typeevenement: 'Type d''évènement'
+    type: 'Type d''évènement'
     gestion: Gestion
     event: Evènement
     events: Evènements
@@ -59,16 +60,18 @@ label:
     depenses: Dépenses
     charges: Charges
     versement: Versement
+    versementmembre: Versement par membre
     donnateur: Donnateur
-    etat:
-        caisse: 'Etat caisse'
-        type: 'Etat type d''évènement'
-        type.membre: 'Etat par membre'
-        versementmembre: 'Etat versement par membre'
-        charge: 'Etat charge'
     etat: Etat
+#    etat:
+#        caisse: 'Etat caisse'
+#        type: 'Etat type d''évènement'
+#        type.membre: 'Etat par membre'
+#        versementmembre: 'Etat versement par membre'
+#        charge: 'Etat charge'
 text:
     modification: 'Modification %objet%'
+    versement: Versement %objet% :
     list: 'Liste des %objet%'
     nouvelle: 'Nouvelle %objet%'
     nouveau: 'Nouveau %objet%'
@@ -92,6 +95,7 @@ action:
     details: Détails
     gerer: Gérer
     detailscotis: 'Détails cotisation'
+    detailsversement: 'Détails versement'
 # Form label
 form:
     label:

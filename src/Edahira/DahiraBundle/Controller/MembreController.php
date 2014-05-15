@@ -24,9 +24,7 @@ class MembreController extends Controller
     	$user = $this->get('security.context')->getToken()->getUser();
     	
 		if(count($user->getActiveDahira()->getCategories()) < 1){
-			$url = $this->generateUrl("categorie_editer");
-			$this->get('session')->getFlashBag()->add('html','action.create.categorie');
-            $this->get('session')->getFlashBag()->add('url',$url);
+			$this->get('session')->getFlashBag()->add('info','action.create.categorie');
 
 			return $this->render('EdahiraDahiraBundle:Membre:editer.html.twig');
 		}

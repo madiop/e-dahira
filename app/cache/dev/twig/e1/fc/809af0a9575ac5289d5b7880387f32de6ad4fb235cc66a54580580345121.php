@@ -28,13 +28,8 @@ class __TwigTemplate_e1fc809af0a9575ac5289d5b7880387f32de6ad4fb235cc66a545805803
     public function block_fos_user_content($context, array $blocks = array())
     {
         // line 4
-        echo "<div class=\"span5 offset4\">
-\t";
-        // line 5
+        echo "\t";
         $this->env->loadTemplate("FOSUserBundle:Registration:register_content.html.twig")->display($context);
-        // line 6
-        echo "</div>
-";
     }
 
     public function getTemplateName()
@@ -49,6 +44,6 @@ class __TwigTemplate_e1fc809af0a9575ac5289d5b7880387f32de6ad4fb235cc66a545805803
 
     public function getDebugInfo()
     {
-        return array (  36 => 6,  34 => 5,  31 => 4,  28 => 3,);
+        return array (  31 => 4,  28 => 3,);
     }
 }

@@ -2,10 +2,19 @@
 
 {% trans_default_domain 'EdahiraDahiraBundle' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #edahira_dahirabundle_dons_date select{
+            width:73px
+        }
+    </style>
+{% endblock %}
+
 {% block title %}{{ parent()}} | {{'label.charge' | lower | trans }}{% endblock %}
 
 {% block body_header %}
-	<h1>{{ 'label.cotisation' | trans({'%objet%': 'caisse'}) }}</h1>
+	<h1>{{ 'text.versement' | trans({'%objet%': 'charge'}) }}  <small>{{ charge.objet }}</small></h1>
 {% endblock %}
 
 {% block body_content%}
@@ -42,4 +51,46 @@
 	{% else %}
 		<p>{{ 'text.aucun' | trans({'%objet%': 'membre'}) }}</p>
 	{% endif %}
+
+	<div class="page-header">
+        <h1><small>{{ 'label.dons' | trans }}</small></h1>
+    </div>
+    <div id="dons_id" >
+        {{ render(controller('EdahiraDahiraBundle:Don:index', {'type': 2, 'idType': charge.id})) }}
+        
+        <a id="ajouter_don" href="" class="btn btn-success">{{ 'label.ajouter' | trans }}</a>
+    </div>
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $("#ajouter_don").click(function(e){
+            /* e.preventDefault(); */
+            /* var DATA = $(this).serialize(); */
+            $.ajax({
+                type: "GET",
+                url: "{{ path('don_editer', {'idType': charge.id, 'type': 2, 'id': null})}}",
+             /* data: DATA,*/
+                cache: false,
+                success: function(data){
+                   $('#dons_id').html(data);
+                }
+            });    
+            return false;
+        });
+        function editDon(don){
+            /* alert(link); */
+            $.ajax({
+                type: "GET",
+                url: don,
+                cache: false,
+                success: function(data){
+                   $('#dons_id').html(data);
+                }
+            });    
+            return false;
+        }
+    </script>
 {% endblock %}

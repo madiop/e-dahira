@@ -37,7 +37,7 @@
 						<div class="btn-group">
 							<a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">{{ 'label.actions'| trans }} <span class="caret"></span></a>
 							<ul class="dropdown-menu">
-								<li><a href="{{ path('charges_details', {'id': charge.id}) }}"><i class="icon-align-left"></i> {{ 'action.detailscotis' |trans }}</a></li>
+								<li><a href="{{ path('charges_details', {'id': charge.id}) }}"><i class="icon-align-left"></i> {{ 'action.detailsversement' |trans }}</a></li>
 								<li><a href="{{ path('charges_editer', {'id': charge.id}) }}"><i class="icon-pencil"></i> {{ 'action.edit' |trans }}</a></li>
 								<li><a href="{{ path('charges_supprimer', {'id': charge.id}) }}"><i class="icon-trash"></i> {{ 'action.delete' |trans }}</a></li>
                             {% if charge.etat == true %}

@@ -6,7 +6,7 @@
 
 {% block body_header %}
     
-    {% if membre.id %}
+    {% if membre.id is defined %}
 		<h1>{{ 'text.modification' | trans({'%objet%': 'membre'}) }}</h1>
 	{% else %}
 		<h1>{{ 'text.nouveau' | trans({'%objet%': 'membre'}) }}</h1>
